@@ -17,6 +17,12 @@ export const StyledCheckout = styled.section`
 	height: 100%;
 	background: white;
 
+	div.container {
+		display: flex;
+		flex-direction: column;
+		row-gap: 1rem;
+	}
+
 	@media (max-width: 500px) {
 		width: 100%;
 	}
@@ -38,5 +44,7 @@ export const CheckoutHeader = styled.header`
 `;
 
 export const CheckoutBody = styled.main`
-	background: whitesmoke;
+	display: flex;
+	flex-direction: column;
+	row-gap: 1rem;
 `;

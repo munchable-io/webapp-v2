@@ -1,13 +1,16 @@
 import { FiMenu, FiShoppingCart } from "react-icons/fi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCheckoutModalOpen } from "../../restaurant/restaurant.slice";
-import { StyledHeader } from "./Header.styled";
+import { getOrderSize } from "../../users/users.slice";
+import { HeaderCart, StyledHeader } from "./Header.styled";
 
 const Header = () => {
 	const dispatch = useDispatch();
+	const hasOrder = useSelector(getOrderSize) > 0;
+
 	return (
-		<div className="container">
-			<StyledHeader>
+		<StyledHeader>
+			<div className="container">
 				<div className="headerLeft">
 					<FiMenu />
 				</div>
@@ -15,14 +18,17 @@ const Header = () => {
 					<h1>Lucky Dynasty</h1>
 				</div>
 				<div className="headerRight">
-					<FiShoppingCart
+					<HeaderCart
+						hasOrder={hasOrder}
 						onClick={() => {
 							dispatch(setCheckoutModalOpen(true));
 						}}
-					/>
+					>
+						<FiShoppingCart />
+					</HeaderCart>
 				</div>
-			</StyledHeader>
-		</div>
+			</div>
+		</StyledHeader>
 	);
 };
 

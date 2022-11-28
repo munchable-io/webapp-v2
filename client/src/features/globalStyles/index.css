@@ -3,6 +3,7 @@
 
 :root {
 	--primary-red: #d63031;
+	--primary-bright-red: #e74c3c;
 	--primary-light-blue: #74b9ff;
 	--primary-blue: #0984e3;
 	--primary-dark-gray: #2d3436;
@@ -73,6 +74,15 @@ h5 {
 	line-height: 1rem;
 }
 
+a {
+	color: var(--primary-blue);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
 svg {
 	color: black;
 	width: 1.6rem;
@@ -95,6 +105,10 @@ svg {
 
 .italics {
 	font-style: italic;
+}
+
+.bold {
+	font-weight: 600;
 }
 
 .container {

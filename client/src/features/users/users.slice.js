@@ -21,14 +21,18 @@ const usersSlice = createSlice({
 				state.order.push(item);
 			}
 		},
+		removeItemFromOrder(state, action) {
+			state.order = state.order.filter((item) => item.name !== action.payload);
+		},
 	},
 });
 
 // functions
 export const getOrder = (state) => state.users.order;
+export const getOrderSize = (state) => state.users.order.length;
 
 // actions
-export const { addItemToOrder } = usersSlice.actions;
+export const { addItemToOrder, removeItemFromOrder } = usersSlice.actions;
 
 // export reducer
 export default usersSlice.reducer;
