@@ -24,6 +24,14 @@ const usersSlice = createSlice({
 		removeItemFromOrder(state, action) {
 			state.order = state.order.filter((item) => item.name !== action.payload);
 		},
+		incrementQty(state, action) {
+			const index = state.order.findIndex(
+				(item) => item.name === action.payload.itemName
+			);
+			if (state.order[index].qty + action.payload.amt > 0) {
+				state.order[index].qty += action.payload.amt;
+			}
+		},
 	},
 });
 
@@ -32,7 +40,8 @@ export const getOrder = (state) => state.users.order;
 export const getOrderSize = (state) => state.users.order.length;
 
 // actions
-export const { addItemToOrder, removeItemFromOrder } = usersSlice.actions;
+export const { addItemToOrder, removeItemFromOrder, incrementQty } =
+	usersSlice.actions;
 
 // export reducer
 export default usersSlice.reducer;

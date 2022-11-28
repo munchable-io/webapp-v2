@@ -1,9 +1,10 @@
-import { FiTrash2, FiEdit } from "react-icons/fi";
+import { FiTrash2 } from "react-icons/fi";
 import { CheckoutItemSection, StyledCheckoutItem } from "./Checkout.styled";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { removeItemFromOrder } from "../../users/users.slice";
+import { incrementQty, removeItemFromOrder } from "../../users/users.slice";
+import Counter from "../../ui/Counter/Counter";
 
 const CheckoutItem = ({ item }) => {
 	const dispatch = useDispatch();
@@ -12,7 +13,8 @@ const CheckoutItem = ({ item }) => {
 	const itemOptions = item?.options.map((option, index) => {
 		const choices = option?.choices.map(
 			(choice) =>
-				choice?.name + (choice?.cost !== 0 ? ` ($${choice?.cost}) ` : "")
+				choice?.name +
+				(choice?.cost !== 0 ? ` ($${choice?.cost?.toFixed(2)}) ` : "")
 		);
 
 		return (
@@ -27,11 +29,19 @@ const CheckoutItem = ({ item }) => {
 		<StyledCheckoutItem>
 			<CheckoutItemSection>
 				<h4>{`${item?.name} x${item?.qty}`}</h4>
-				<p>${item?.price}</p>
+				<p>${((item?.price + item?.additionalPrice) * item?.qty).toFixed(2)}</p>
 			</CheckoutItemSection>
 			<CheckoutItemSection>
 				<div className="row">
-					<FiEdit />
+					<Counter
+						value={item?.qty}
+						increment={() =>
+							dispatch(incrementQty({ itemName: item?.name, amt: 1 }))
+						}
+						decrement={() =>
+							dispatch(incrementQty({ itemName: item?.name, amt: -1 }))
+						}
+					/>
 					<FiTrash2 onClick={() => dispatch(removeItemFromOrder(item?.name))} />
 				</div>
 				<Link onClick={() => setShowDetails(!showDetails)} className="sm">
@@ -41,6 +51,17 @@ const CheckoutItem = ({ item }) => {
 			{showDetails && (
 				<CheckoutItemSection>
 					<div className="column">
+						<p className="sm">
+							<span className="bold">{item?.name}</span>:{` $${item.price}`}
+						</p>
+						{item?.additionalPrice !== 0 && (
+							<p className="sm">
+								<span className="bold">Additional costs</span>:
+								{` $${item?.additionalPrice?.toFixed(
+									2
+								)} (see below for details)`}
+							</p>
+						)}
 						{itemOptions}
 						<p className="sm">
 							<span className="bold">Special instructions</span>:

@@ -31,7 +31,6 @@ const ItemModal = forwardRef((props, ref) => {
 				selectionType: option?.selectionType,
 				required: option?.required,
 				maxQty: option?.maxQty,
-				selectedChoice: undefined,
 				choices: option?.choices.map((choice) => {
 					return {
 						_id: choice?._id,
@@ -44,32 +43,48 @@ const ItemModal = forwardRef((props, ref) => {
 		})
 	);
 
-	const formValid = () => {
+	const customizedOptions = options.map((option) => {
+		let choices = [];
+		for (let choice of option.choices) {
+			choice.selected && choices.push({ name: choice.name, cost: choice.cost });
+		}
+		return {
+			name: option.name,
+			choices,
+		};
+	});
+	let additionalPrice = 0;
+	for (let option of customizedOptions) {
+		for (let choice of option.choices) {
+			if (choice.cost !== 0) additionalPrice += choice.cost;
+		}
+	}
+	const totalPrice = qty * (item?.price + additionalPrice);
+
+	const validateForm = () => {
+		let res = [];
 		for (let option of options) {
-			if (option?.required && option?.selectedChoice === undefined) {
-				return false;
+			if (option?.required) {
+				let choiceSelected = false;
+				for (let choice of option.choices) {
+					if (choice.selected) {
+						choiceSelected = true;
+					}
+				}
+				if (!choiceSelected) res.push(option?.name);
 			}
 		}
-		return true;
+		return res;
 	};
 
 	const handleSubmit = () => {
-		if (formValid()) {
-			const customizedOptions = options.map((option) => {
-				let choices = [];
-				for (let choice of option.choices) {
-					choice.selected &&
-						choices.push({ name: choice.name, cost: choice.cost });
-				}
-				return {
-					name: option.name,
-					choices,
-				};
-			});
+		const missingRequiredFields = validateForm();
+		if (missingRequiredFields.length === 0) {
 			const customizedItem = {
 				id: item._id,
 				name: item.name,
 				price: item.price,
+				additionalPrice: additionalPrice,
 				qty: qty,
 				options: customizedOptions,
 				message: userMessage || "N/A",
@@ -82,7 +97,11 @@ const ItemModal = forwardRef((props, ref) => {
 
 			props.modifyModal(false);
 		} else {
-			alert("Please fill out all required fields.");
+			// TODO: add toast notifications
+			alert(
+				"Please select choices for the following options: \n" +
+					missingRequiredFields.map((field) => field)
+			);
 		}
 	};
 
@@ -130,9 +149,17 @@ const ItemModal = forwardRef((props, ref) => {
 				</ModalSection>
 			</ModalBody>
 			<ModalFooter>
-				<Counter value={qty} setValue={setQty} />
+				<Counter
+					value={qty}
+					increment={() => setQty(qty + 1)}
+					decrement={() => {
+						if (qty > 1) {
+							setQty(qty - 1);
+						}
+					}}
+				/>
 				<Button
-					value="Add To Cart | $12.34"
+					value={`Add To Cart | $${totalPrice.toFixed(2)}`}
 					color={"#0984e3"}
 					onClick={handleSubmit}
 				/>

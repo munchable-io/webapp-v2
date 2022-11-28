@@ -22,6 +22,7 @@ export const CheckoutItemSection = styled.div`
 
 	div.row {
 		display: flex;
+		align-items: center;
 		column-gap: 0.5rem;
 	}
 

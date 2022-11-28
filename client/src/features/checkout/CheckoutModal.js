@@ -24,7 +24,10 @@ const CheckoutModal = () => {
 						<h2>Order Review:</h2>
 						<FiX onClick={() => dispatch(setCheckoutModalOpen(false))} />
 					</CheckoutHeader>
-					<CheckoutBody>{items}</CheckoutBody>
+					<CheckoutBody>
+						{order.length === 0 && <h4>Cart is currently empty</h4>}
+						{items}
+					</CheckoutBody>
 				</div>
 			</StyledCheckout>
 		</CheckoutWrapper>
