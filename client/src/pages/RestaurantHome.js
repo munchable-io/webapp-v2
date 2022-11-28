@@ -1,10 +1,14 @@
+import { useSelector } from "react-redux";
+import CheckoutModal from "../features/checkout/CheckoutModal";
 import ItemModal from "../features/item/ItemModal";
 import ItemsList from "../features/item/ItemsList";
+import { getCheckoutModalOpen } from "../features/restaurant/restaurant.slice";
 import useComponentVisible from "../features/ui/hooks/useComponentVisible";
 
 const RestaurantHome = () => {
 	const { ref, isComponentVisible, setIsComponentVisible } =
 		useComponentVisible(false);
+	const isCheckoutModalOpen = useSelector(getCheckoutModalOpen);
 
 	return (
 		<>
@@ -14,6 +18,7 @@ const RestaurantHome = () => {
 					modifyModal={(state) => setIsComponentVisible(state)}
 				/>
 			)}
+			{isCheckoutModalOpen && <CheckoutModal />}
 			<div className="container">
 				<ItemsList modifyModal={(state) => setIsComponentVisible(state)} />
 			</div>

@@ -7,15 +7,17 @@ import {
 	ModalSection,
 	StyledModal,
 } from "../../ui/Modal/Modal.styled";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getSelectedItem } from "../item.slice";
 import SingleOption from "../Options/SingleOption";
 import MultiOption from "../Options/MultiOption";
 import Textbox from "../../ui/Textbox/Textbox";
 import Button from "../../ui/Button/Button";
 import Counter from "../../ui/Counter/Counter";
+import { addItemToOrder } from "../../users/users.slice";
 
 const ItemModal = forwardRef((props, ref) => {
+	const dispatch = useDispatch();
 	const item = useSelector(getSelectedItem);
 
 	const [userMessage, setUserMessage] = useState("");
@@ -53,8 +55,32 @@ const ItemModal = forwardRef((props, ref) => {
 
 	const handleSubmit = () => {
 		if (formValid()) {
-			// create order object
-			// send to order slice
+			const customizedOptions = options.map((option) => {
+				let choices = [];
+				for (let choice of option.choices) {
+					choice.selected &&
+						choices.push({ name: choice.name, cost: choice.cost });
+				}
+				return {
+					name: option.name,
+					choices,
+				};
+			});
+			const customizedItem = {
+				id: item._id,
+				name: item.name,
+				price: item.price,
+				qty: qty,
+				options: customizedOptions,
+				message: userMessage || "N/A",
+			};
+			dispatch(addItemToOrder(customizedItem));
+
+			setUserMessage("");
+			setQty(1);
+			setOptions([]);
+
+			props.modifyModal(false);
 		} else {
 			alert("Please fill out all required fields.");
 		}
