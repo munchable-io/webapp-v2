@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { nanoid } from "@reduxjs/toolkit";
 
 // define endpoint url
 const ITEMS_URL = "http://localhost:5000/items";
@@ -32,6 +33,53 @@ const itemsSlice = createSlice({
 				(item) => item._id === action.payload
 			);
 		},
+		resetSelectedItem(state, action) {
+			state.selectedItem = {
+				_id: nanoid(),
+				name: "",
+				category: "",
+				description: "",
+				price: "",
+				note: {
+					placeholder: "No substitutes; additions are subject to extra charge.",
+				},
+				options: [],
+			};
+		},
+		addItemOption(state, action) {
+			const option = {
+				_id: nanoid(),
+				name: "",
+				selectionType: "single",
+				description: "Please select one",
+				required: false,
+				maxQty: 1,
+				choices: [],
+			};
+			state.selectedItem.options.push(option);
+		},
+		addOptionChoice(state, action) {
+			const index = state.selectedItem.options.findIndex(
+				(option) => option._id === action.payload.id
+			);
+			if (index !== -1 && action.payload?.choice) {
+				const choice = {
+					_id: nanoid(),
+					name: action.payload.choice.name,
+					cost: parseFloat(action.payload.choice.cost),
+				};
+				state.selectedItem.options[index].choices.push(choice);
+			}
+		},
+		removeOptionChoice(state, action) {
+			const optionIndex = state.selectedItem.options.findIndex(
+				(option) => option._id === action.payload.optionId
+			);
+			const choices = state.selectedItem.options[optionIndex].choices.filter(
+				(choice) => choice._id !== action.payload.choiceId
+			);
+			state.selectedItem.options[optionIndex].choices = choices;
+		},
 	},
 	extraReducers(builder) {
 		builder
@@ -56,7 +104,13 @@ export const getItemsError = (state) => state.items.error;
 export const getSelectedItem = (state) => state.items.selectedItem;
 
 // actions
-export const { setSelectedItem } = itemsSlice.actions;
+export const {
+	setSelectedItem,
+	resetSelectedItem,
+	addItemOption,
+	addOptionChoice,
+	removeOptionChoice,
+} = itemsSlice.actions;
 
 // export reducer
 export default itemsSlice.reducer;

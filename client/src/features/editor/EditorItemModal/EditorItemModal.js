@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import { FiX } from "react-icons/fi";
-import { useSelector } from "react-redux";
-import { getSelectedItem } from "../../../app/item.slice";
+import { useDispatch, useSelector } from "react-redux";
+import { addItemOption, getSelectedItem } from "../../../app/item.slice";
 import {
 	ModalBody,
 	ModalFooter,
@@ -14,8 +14,10 @@ import { useState } from "react";
 import Textbox from "../../ui/Textbox/Textbox";
 import Dropdown from "../../ui/Dropdown/Dropdown";
 import EditorOption from "../EditorOption/EditorOption";
+import Button from "../../ui/Button/Button";
 
 const EditorItemModal = forwardRef((props, ref) => {
+	const dispatch = useDispatch();
 	const item = useSelector(getSelectedItem);
 
 	const [itemName, setItemName] = useState(item?.name || "");
@@ -38,10 +40,14 @@ const EditorItemModal = forwardRef((props, ref) => {
 		<EditorOption key={option._id} option={option} />
 	));
 
+	const addNewOption = () => {
+		dispatch(addItemOption());
+	};
+
 	return (
 		<StyledModal ref={ref}>
 			<ModalHeader>
-				<h2>{item === undefined ? "Create " : "Update "} modal</h2>
+				<h2>{item?.createdAt ? "Update " : "Create "} Menu Item</h2>
 				<FiX onClick={() => props?.modifyModal(false)} />
 			</ModalHeader>
 			<ModalBody>
@@ -81,16 +87,26 @@ const EditorItemModal = forwardRef((props, ref) => {
 					/>
 				</ModalSection>
 				<ModalSection direction="column">
-					<h4>Options:</h4>
+					<div className="row">
+						<h4>Options:</h4>
+						<Button
+							value="Add New Option"
+							fontSize="0.6rem"
+							onClick={addNewOption}
+						/>
+					</div>
 					{options}
-				</ModalSection>
-				<ModalSection direction="columnn">
-					<h4>Special Instructions:</h4>
 				</ModalSection>
 			</ModalBody>
 			<ModalFooter>
-				<button>edit</button>
-				<button>delete</button>
+				<Button
+					value="Delete"
+					onClick={() => alert("delete item " + item._id)}
+				/>
+				<Button
+					value={item?.createdAt ? "Update Item" : "Create New Item"}
+					onClick={() => alert("create/updated item " + item._id)}
+				/>
 			</ModalFooter>
 		</StyledModal>
 	);

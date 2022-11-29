@@ -36,4 +36,11 @@ export const EditorOptionBody = styled.div`
 	transition: all 0.25s;
 	display: ${(props) => (props.open ? "auto" : "none")};
 	padding: ${(props) => (props.open ? "0.5rem 1rem" : "0")};
+
+	div.row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1rem 0;
+	}
 `;

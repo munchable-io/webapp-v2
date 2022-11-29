@@ -53,6 +53,13 @@ export const ModalSection = styled.section`
 			: "center"};
 	column-gap: 0.5rem;
 	row-gap: 0.5rem;
+
+	div.row {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
 `;
 
 export const ModalFooter = styled.footer`

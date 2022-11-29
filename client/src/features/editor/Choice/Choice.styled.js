@@ -5,6 +5,7 @@ export const StyledChoice = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	transition: all 0.25s;
+	padding: 0.5rem;
 
 	&:hover {
 		background: var(--primary-light-gray);
