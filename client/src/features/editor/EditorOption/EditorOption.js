@@ -3,6 +3,7 @@ import { FiTrash2 } from "react-icons/fi";
 import Dropdown from "../../ui/Dropdown/Dropdown";
 import Input from "../../ui/Input/Input";
 import Select from "../../ui/Select/Select";
+import Choice from "../Choice/Choice";
 import {
 	EditorOptionBody,
 	EditorOptionHeader,
@@ -21,6 +22,10 @@ const EditorOption = ({ option }) => {
 			: "Select all that apply";
 
 	const onOptionNameChange = (e) => setOptionName(e.target.value);
+
+	const choices = option?.choices.map((choice) => (
+		<Choice key={choice._id} choice={choice} />
+	));
 
 	return (
 		<StyledEditorOption open={optionOpen}>
@@ -46,6 +51,7 @@ const EditorOption = ({ option }) => {
 				/>
 				<div>
 					<p className="bold">Choices:</p>
+					{choices}
 				</div>
 			</EditorOptionBody>
 		</StyledEditorOption>
