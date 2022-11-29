@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import itemsReducer from "../features/item/item.slice";
+import itemsReducer from "./item.slice";
 import usersReducer from "../features/users/users.slice";
 import restaurantsReducer from "../features/restaurant/restaurant.slice";
 

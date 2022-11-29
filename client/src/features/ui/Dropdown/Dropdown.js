@@ -33,7 +33,7 @@ const Dropdown = (props) => {
 			<DropdownContent show={filteredOptions.length > 0}>
 				{filteredOptions.map((option) => {
 					return (
-						<li key={option._id} onClick={() => props?.setValue(option.name)}>
+						<li key={option.id} onClick={() => props?.setValue(option.name)}>
 							{option.name}
 						</li>
 					);

@@ -1,6 +1,6 @@
 import { StyledItemCard } from "./ItemCard.styled";
 import { useDispatch } from "react-redux";
-import { setSelectedItem } from "../item.slice";
+import { setSelectedItem } from "../../../app/item.slice";
 
 const ItemCard = ({ item, modifyModal }) => {
 	const dispatch = useDispatch();
@@ -12,10 +12,10 @@ const ItemCard = ({ item, modifyModal }) => {
 
 	return (
 		<StyledItemCard onClick={handleClick}>
-			<h4>{item.name}</h4>
-			<p className="xs">{item.description.substring(0, 50)}...</p>
+			<h4>{item?.name}</h4>
+			<p className="xs">{item?.description.substring(0, 50)}...</p>
 			<div className="itemCardRow">
-				<p className="xs">${item.price}</p>
+				<p className="xs">${item?.price}</p>
 			</div>
 		</StyledItemCard>
 	);

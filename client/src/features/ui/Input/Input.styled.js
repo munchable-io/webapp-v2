@@ -11,7 +11,7 @@ export const InputWrapper = styled.div`
 		font-size: 1rem;
 		border: 1px solid
 			${(props) => (props.color ? props.color : "var(--primary-gray)")};
-		color: ${(props) => (props.color ? props.color : "var(--primary-gray)")};
+		color: ${(props) => (props.color ? props.color : "black")};
 		outline: none;
 		border-radius: 8px;
 

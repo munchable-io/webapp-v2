@@ -8,7 +8,7 @@ import {
 	StyledModal,
 } from "../../ui/Modal/Modal.styled";
 import { useDispatch, useSelector } from "react-redux";
-import { getSelectedItem } from "../item.slice";
+import { getSelectedItem } from "../../../app/item.slice";
 import SingleOption from "../Options/SingleOption";
 import MultiOption from "../Options/MultiOption";
 import Textbox from "../../ui/Textbox/Textbox";

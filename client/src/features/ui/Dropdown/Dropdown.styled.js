@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const DropdownWrapper = styled.div`
+	padding-top: 0.5rem;
 	width: ${(props) => (props.width ? props.width : "min-content")};
 	position: relative;
 
@@ -12,7 +13,7 @@ export const DropdownWrapper = styled.div`
 		outline: none;
 		border: 1px solid
 			${(props) => (props.color ? props.color : "var(--primary-gray)")};
-		color: ${(props) => (props.color ? props.color : "var(--primary-gray)")};
+		color: ${(props) => (props.color ? props.color : "black")};
 		border-bottom-left-radius: ${(props) => (props.show ? "0" : "8px")};
 		border-bottom-right-radius: ${(props) => (props.show ? "0" : "8px")};
 

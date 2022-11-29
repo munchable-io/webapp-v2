@@ -5,6 +5,7 @@ export const TextboxWrapper = styled.div`
 	resize: none;
 	width: ${(props) => (props.width ? props.width : "100%")};
 	height: ${(props) => (props.height ? props.height : "10rem")};
+	padding-top: 0.5rem;
 
 	span {
 		position: absolute;
@@ -23,12 +24,16 @@ export const StyledTextbox = styled.textarea`
 	resize: none;
 	border: 1px solid
 		${(props) => (props.color ? props.color : "var(--primary-gray)")};
-	color: ${(props) => (props.color ? props.color : "var(--primary-dark-gray)")};
+	color: ${(props) => (props.color ? props.color : "black")};
 	border-radius: 8px;
 	outline: none;
 	padding: 1rem;
 	font-size: ${(props) => (props.fontSize ? props.fontSize : "1rem")};
 	line-height: ${(props) => (props.fontSize ? props.fontSize : "1rem")};
+
+	&::placeholder {
+		color: var(--primary-gray);
+	}
 
 	&:hover {
 		cursor: ${(props) => (props.disabled ? "not-allowed" : "search")};

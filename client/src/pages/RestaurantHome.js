@@ -20,6 +20,7 @@ const RestaurantHome = () => {
 			)}
 			{isCheckoutModalOpen && <CheckoutModal />}
 			<div className="container">
+				<h2>Menu</h2>
 				<ItemsList modifyModal={(state) => setIsComponentVisible(state)} />
 			</div>
 		</>
