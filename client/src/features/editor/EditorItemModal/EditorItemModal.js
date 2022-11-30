@@ -1,7 +1,11 @@
 import { forwardRef } from "react";
 import { FiX } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-import { addItemOption, getSelectedItem } from "../../../app/item.slice";
+import {
+	addItemOption,
+	fetchItems,
+	getSelectedItem,
+} from "../../../app/item.slice";
 import {
 	ModalBody,
 	ModalFooter,
@@ -15,10 +19,14 @@ import Textbox from "../../ui/Textbox/Textbox";
 import Dropdown from "../../ui/Dropdown/Dropdown";
 import EditorOption from "../EditorOption/EditorOption";
 import Button from "../../ui/Button/Button";
+import axios from "axios";
+import { store } from "../../../app/store";
 
 const EditorItemModal = forwardRef((props, ref) => {
 	const dispatch = useDispatch();
 	const item = useSelector(getSelectedItem);
+
+	const [loading, setLoading] = useState(false);
 
 	const [itemName, setItemName] = useState(item?.name || "");
 	const [itemCategory, setItemCategory] = useState(item?.category || "");
@@ -36,12 +44,112 @@ const EditorItemModal = forwardRef((props, ref) => {
 		}
 	};
 
-	const options = item?.options.map((option) => (
-		<EditorOption key={option._id} option={option} />
-	));
+	const options = item?.options.map((option) => {
+		return <EditorOption key={option._id} item={item} option={option} />;
+	});
 
 	const addNewOption = () => {
 		dispatch(addItemOption());
+	};
+
+	const validateForm = () => {
+		let res = [];
+
+		if (!itemName) res.push("Item Name");
+		if (!itemPrice) res.push("Item Price");
+		if (!itemCategory) res.push("Item Category");
+		if (!itemDescription) res.push("Item Description");
+
+		for (let option of item?.options) {
+			if (option?.required && option?.choices.length === 0) {
+				res.push(option?.name || "Empty option name");
+			}
+		}
+
+		return res;
+	};
+
+	const addItem = async (payload) => {
+		try {
+			await axios.post("http://localhost:5000/items", payload);
+
+			store.dispatch(fetchItems());
+			props?.setIsComponentVisible(false);
+		} catch (err) {
+			alert("There was an error. Please check logs");
+			console.log(err);
+		}
+	};
+
+	const updateItem = async (payload) => {
+		try {
+			await axios.put(`http://localhost:5000/items/${item?._id}`, payload);
+
+			store.dispatch(fetchItems());
+			props?.setIsComponentVisible(false);
+		} catch (err) {
+			alert("There was an error. Please check logs");
+			console.log(err);
+		}
+	};
+
+	const deleteItem = async (payload) => {
+		try {
+			await axios.delete(`http://localhost:5000/items/${item?._id}`, payload);
+
+			store.dispatch(fetchItems());
+			props?.setIsComponentVisible(false);
+		} catch (err) {
+			alert("There was an error. Please check logs");
+			console.log(err);
+		}
+	};
+
+	const createUpdateItem = () => {
+		const missingRequiredFields = validateForm();
+		if (missingRequiredFields.length === 0) {
+			setLoading(true);
+			const itemToAdd = {
+				name: itemName,
+				description: itemDescription,
+				category: itemCategory,
+				price: itemPrice,
+				note: {
+					placeholder: "No substitutes; additions are subject to extra charge",
+				},
+				options: item?.options.map((option) => {
+					return {
+						name: option.name,
+						required: option.required,
+						selectionType: option.selectionType,
+						description:
+							option.selectionType === "single"
+								? "Please select one"
+								: "Select all that apply",
+						choices: option.choices.map((choice) => {
+							return {
+								name: choice.name,
+								cost: choice.cost,
+							};
+						}),
+						maxQty:
+							option.selectionType === "single" ? 1 : option.choices.length,
+					};
+				}),
+			};
+
+			if (item?.createdAt) {
+				updateItem(itemToAdd);
+			} else {
+				addItem(itemToAdd);
+			}
+		} else {
+			// TODO add toast notifications
+			alert(
+				"Please select choices for the following options: \n" +
+					missingRequiredFields.map((field) => field)
+			);
+		}
 	};
 
 	return (
@@ -101,11 +209,14 @@ const EditorItemModal = forwardRef((props, ref) => {
 			<ModalFooter>
 				<Button
 					value="Delete"
-					onClick={() => alert("delete item " + item._id)}
+					onClick={() => {
+						deleteItem();
+					}}
 				/>
 				<Button
 					value={item?.createdAt ? "Update Item" : "Create New Item"}
-					onClick={() => alert("create/updated item " + item._id)}
+					loading={loading}
+					onClick={createUpdateItem}
 				/>
 			</ModalFooter>
 		</StyledModal>

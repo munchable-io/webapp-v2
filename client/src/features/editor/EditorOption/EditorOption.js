@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
 import { useDispatch } from "react-redux";
-import { addOptionChoice } from "../../../app/item.slice";
+import {
+	addOptionChoice,
+	setOptionName,
+	setOptionRequired,
+	setOptionSelectionType,
+} from "../../../app/item.slice";
 import Button from "../../ui/Button/Button";
+import Checkbox from "../../ui/Checkbox/Checkbox";
 import Input from "../../ui/Input/Input";
 import Select from "../../ui/Select/Select";
 import Choice from "../Choice/Choice";
@@ -16,16 +22,28 @@ const EditorOption = ({ option }) => {
 	const dispatch = useDispatch();
 
 	const [optionOpen, setOptionOpen] = useState(false);
-	const [optionName, setOptionName] = useState(option?.name || "");
-	const [optionSelectionType, setOptionSelectionType] = useState(
-		option?.selectionType || ""
-	);
-	const optionDescription =
-		optionSelectionType === "single"
-			? "Please select one"
-			: "Select all that apply";
 
-	const onOptionNameChange = (e) => setOptionName(e.target.value);
+	const onOptionNameChange = (e) => {
+		dispatch(
+			setOptionName({ optionId: option?._id, optionName: e.target.value })
+		);
+	};
+	const onOptionSelectionTypeChange = (selectionType) => {
+		dispatch(
+			setOptionSelectionType({
+				optionId: option?._id,
+				optionSelectionType: selectionType,
+			})
+		);
+	};
+	const onOptionRequiredChange = () => {
+		dispatch(
+			setOptionRequired({
+				optionId: option?._id,
+				required: !option?.required,
+			})
+		);
+	};
 
 	const choices = option?.choices.map((choice) => (
 		<Choice key={choice._id} choice={choice} optionId={option._id} />
@@ -38,7 +56,7 @@ const EditorOption = ({ option }) => {
 		if (choiceName) {
 			dispatch(
 				addOptionChoice({
-					id: option._id,
+					optionId: option._id,
 					choice: { name: choiceName, cost: choiceCost },
 				})
 			);
@@ -65,7 +83,7 @@ const EditorOption = ({ option }) => {
 				<Input
 					label="Option Name:"
 					width="100%"
-					value={optionName}
+					value={option?.name}
 					setValue={onOptionNameChange}
 				/>
 				<Select
@@ -74,8 +92,13 @@ const EditorOption = ({ option }) => {
 						{ id: 1, name: "single" },
 						{ id: 2, name: "multi" },
 					]}
-					value={optionSelectionType}
-					setValue={setOptionSelectionType}
+					value={option?.selectionType}
+					setValue={onOptionSelectionTypeChange}
+				/>
+				<Checkbox
+					label="Required?"
+					value={option?.required}
+					setValue={onOptionRequiredChange}
 				/>
 				<div>
 					<div className="row">

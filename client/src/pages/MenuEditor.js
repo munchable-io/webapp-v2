@@ -16,6 +16,7 @@ const MenuEditor = () => {
 			{isComponentVisible && (
 				<EditorItemModal
 					ref={ref}
+					setIsComponentVisible={setIsComponentVisible}
 					modifyModal={(state) => setIsComponentVisible(state)}
 				/>
 			)}

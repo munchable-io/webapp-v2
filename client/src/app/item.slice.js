@@ -60,7 +60,7 @@ const itemsSlice = createSlice({
 		},
 		addOptionChoice(state, action) {
 			const index = state.selectedItem.options.findIndex(
-				(option) => option._id === action.payload.id
+				(option) => option._id === action.payload.optionId
 			);
 			if (index !== -1 && action.payload?.choice) {
 				const choice = {
@@ -79,6 +79,26 @@ const itemsSlice = createSlice({
 				(choice) => choice._id !== action.payload.choiceId
 			);
 			state.selectedItem.options[optionIndex].choices = choices;
+		},
+		setOptionName(state, action) {
+			const optionIndex = state.selectedItem.options.findIndex(
+				(option) => option._id === action.payload.optionId
+			);
+			state.selectedItem.options[optionIndex].name = action.payload.optionName;
+		},
+		setOptionSelectionType(state, action) {
+			const optionIndex = state.selectedItem.options.findIndex(
+				(option) => option._id === action.payload.optionId
+			);
+			state.selectedItem.options[optionIndex].selectionType =
+				action.payload.optionSelectionType;
+		},
+		setOptionRequired(state, action) {
+			const optionIndex = state.selectedItem.options.findIndex(
+				(option) => option._id === action.payload.optionId
+			);
+			state.selectedItem.options[optionIndex].required =
+				action.payload.required;
 		},
 	},
 	extraReducers(builder) {
@@ -110,6 +130,9 @@ export const {
 	addItemOption,
 	addOptionChoice,
 	removeOptionChoice,
+	setOptionName,
+	setOptionSelectionType,
+	setOptionRequired,
 } = itemsSlice.actions;
 
 // export reducer
