@@ -17,7 +17,7 @@ export const StyledHeader = styled.header`
 	position: sticky;
 	top: 0;
 
-	div.container {
+	div.headerWrapper {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;

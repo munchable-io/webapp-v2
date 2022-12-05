@@ -4,6 +4,7 @@ import {
 	getItemsError,
 	getItemsState,
 } from "../../app/item.slice";
+import Categories from "./Categories/Categories";
 import { StyledItemList } from "./Item.styled";
 import ItemCard from "./ItemCard";
 
@@ -29,7 +30,12 @@ const ItemList = ({ modifyModal }) => {
 	}
 
 	// return items list
-	return <StyledItemList>{content}</StyledItemList>;
+	return (
+		<>
+			<Categories />
+			<StyledItemList>{content}</StyledItemList>
+		</>
+	);
 };
 
 export default ItemList;
