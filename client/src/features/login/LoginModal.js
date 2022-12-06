@@ -2,9 +2,11 @@ import { useState } from "react";
 import Button from "../ui/Button/Button";
 import Input from "../ui/Input/Input";
 import { LoginSection, StyledLoginModal } from "./Login.styled";
+import { store } from "../../app/store";
+import { fetchUserByNumber } from "../../app/auth.slice";
 
 const LoginModal = () => {
-	const [screen, setScreen] = useState("userFound");
+	const [screen, setScreen] = useState("phoneNumber");
 
 	const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -16,6 +18,7 @@ const LoginModal = () => {
 
 	const handlePhoneNumber = () => {
 		if (phoneNumber.length === 10) {
+			store.dispatch(fetchUserByNumber(phoneNumber));
 			setScreen("userNotFound");
 		} else {
 			alert("Error: please input a 10-digit phone number (no country code)");
