@@ -9,6 +9,7 @@ export const InputWrapper = styled.div`
 		width: ${(props) => (props.width ? props.width : "initial")};
 		padding: 0.25rem 1rem;
 		font-size: 1rem;
+		font-weight: 200;
 		border: 1px solid
 			${(props) => (props.color ? props.color : "var(--primary-gray)")};
 		color: ${(props) => (props.color ? props.color : "black")};
@@ -44,6 +45,7 @@ export const InputWrapper = styled.div`
 		left: 0;
 		padding: 0.75rem 1rem;
 		font-size: 1rem;
+		font-weight: 200;
 		pointer-events: none;
 		transition: all 0.25s;
 		color: ${(props) => (props.color ? props.color : "var(--primary-gray)")};

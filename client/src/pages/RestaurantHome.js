@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import CheckoutModal from "../features/checkout/CheckoutModal";
 import ItemModal from "../features/item/ItemModal";
-// import ItemsList from "../features/item/ItemsList";
+import ItemsList from "../features/item/ItemsList";
 import { getCheckoutModalOpen } from "../features/restaurant/restaurant.slice";
 import useComponentVisible from "../features/ui/hooks/useComponentVisible";
 import {
@@ -36,7 +36,7 @@ const RestaurantHome = () => {
 						</li>
 					</RestaurantHomeInfo>
 				</div>
-				{/* <ItemsList modifyModal={(state) => setIsComponentVisible(state)} /> */}
+				<ItemsList modifyModal={(state) => setIsComponentVisible(state)} />
 			</div>
 			{isComponentVisible && (
 				<ItemModal

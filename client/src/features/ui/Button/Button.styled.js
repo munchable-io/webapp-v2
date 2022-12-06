@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const StyledButton = styled.button`
 	display: flex;
+	justify-content: center;
 	align-items: center;
 	column-gap: 1rem;
 	width: ${(props) => (props.width ? props.width : "fit-content")};
