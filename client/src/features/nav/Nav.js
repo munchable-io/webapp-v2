@@ -1,12 +1,33 @@
+import { FiEdit, FiHome, FiX } from "react-icons/fi";
 import { forwardRef } from "react";
-import { FiX } from "react-icons/fi";
-import { StyledNav } from "./Nav.styled";
+import { NavItems, StyledNav } from "./Nav.styled";
+import NavItem from "./NavItem";
 
 const Nav = forwardRef((props, ref) => {
 	return (
-		<StyledNav>
+		<StyledNav ref={ref}>
 			<div className="container">
 				<FiX onClick={() => props.modifyModal(false)} />
+				<NavItems>
+					<NavItem
+						to="/"
+						closeNav={() => {
+							props.setNavIsVisible(false);
+						}}
+					>
+						<FiHome />
+						<p className="sm">Home</p>
+					</NavItem>
+					<NavItem
+						to="/editor"
+						closeNav={() => {
+							props.setNavIsVisible(false);
+						}}
+					>
+						<FiEdit />
+						<p className="sm">Menu Editor</p>
+					</NavItem>
+				</NavItems>
 			</div>
 		</StyledNav>
 	);

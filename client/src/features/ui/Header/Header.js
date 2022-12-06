@@ -47,6 +47,7 @@ const Header = () => {
 				<Nav
 					ref={navModalRef}
 					modifyModal={(state) => setIsNavVisible(state)}
+					setIsNavVisible={setIsNavVisible}
 				/>
 			)}
 		</StyledHeader>
