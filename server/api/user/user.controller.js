@@ -1,24 +1,38 @@
 const User = require("./user.model");
 const userValidation = require("./user.validate");
+const bcrypt = require("bcrypt");
 
 const getUsers = async (req, res) => {
 	const users = await User.find();
 	return res.status(200).json(users);
 };
 
-const getUserByNumber = async (req, res) => {
-	// find user by phone number
-	User.findOne({ phoneNumber: req.params.number }, (err, docs) => {
-		if (err) {
-			return res.status(400).json({ message: err });
-		} else {
-			if (docs) {
-				return res.status(200).json(docs);
-			} else {
-				return res.status(400).json({ message: "Cannot find user." });
-			}
+const sendOtp = async (req, res) => {
+	try {
+		// find user by phone number
+		const user = await User.findOne({ phoneNumber: req.params.number }).exec();
+		if (!user) {
+			return res.status(400).json({ message: "User not found." });
 		}
-	});
+
+		// create a pwd for user
+		const pwd = "secretpwd123";
+		const hashedPwd = await bcrypt.hash(pwd, 10);
+
+		// update user with new password
+		const updatedUser = await User.findOneAndUpdate(
+			user._id,
+			{ password: hashedPwd },
+			{ new: true }
+		);
+
+		// send password to user's phone number
+		// TODO: impl
+
+		return res.status(200).json({ message: "OTP has been sent." });
+	} catch (err) {
+		return res.status(400).json({ message: err });
+	}
 };
 
 const createUser = async (req, res) => {
@@ -72,7 +86,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
 	getUsers,
-	getUserByNumber,
+	sendOtp,
 	createUser,
 	updateUser,
 	deleteUser,

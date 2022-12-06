@@ -4,8 +4,9 @@ const {
 	createUser,
 	updateUser,
 	deleteUser,
-	getUserByNumber,
+	sendOtp,
 } = require("./user.controller");
+const { handleLogin } = require("./auth.controller");
 
 /*
 @desc   Get all users
@@ -16,10 +17,10 @@ router.get("/", getUsers);
 
 /*
 @desc   Get user by phone number
-@route  GET /users/:number
+@route  GET /users/send/:number
 @access Private
 */
-router.get("/:number", getUserByNumber);
+router.get("/send/:number", sendOtp);
 
 /*
 @desc   Create new user
@@ -27,6 +28,13 @@ router.get("/:number", getUserByNumber);
 @access Public
 */
 router.post("/", createUser);
+
+/*
+@desc   Authenticate user by phone number
+@route  POST /auth
+@access Private
+*/
+router.post("/auth", handleLogin);
 
 /*
 @desc   Update user by id
