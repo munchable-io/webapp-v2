@@ -6,6 +6,21 @@ const getUsers = async (req, res) => {
 	return res.status(200).json(users);
 };
 
+const getUserByNumber = async (req, res) => {
+	// find user by phone number
+	User.findOne({ phoneNumber: req.params.number }, (err, docs) => {
+		if (err) {
+			return res.status(400).json({ message: err });
+		} else {
+			if (docs) {
+				return res.status(200).json(docs);
+			} else {
+				return res.status(400).json({ message: "Cannot find user." });
+			}
+		}
+	});
+};
+
 const createUser = async (req, res) => {
 	// validate the data
 	const { error } = userValidation(req.body);
@@ -57,6 +72,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
 	getUsers,
+	getUserByNumber,
 	createUser,
 	updateUser,
 	deleteUser,

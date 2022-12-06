@@ -4,6 +4,7 @@ const {
 	createUser,
 	updateUser,
 	deleteUser,
+	getUserByNumber,
 } = require("./user.controller");
 
 /*
@@ -12,6 +13,13 @@ const {
 @access Private
 */
 router.get("/", getUsers);
+
+/*
+@desc   Get user by phone number
+@route  GET /users/:number
+@access Private
+*/
+router.get("/:number", getUserByNumber);
 
 /*
 @desc   Create new user
