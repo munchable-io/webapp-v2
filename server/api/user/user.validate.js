@@ -8,6 +8,7 @@ const userValidation = (data) => {
 		email: Joi.string().required(),
 		password: Joi.string(),
 		role: Joi.string().required(),
+		refreshToken: Joi.string(),
 	});
 
 	return schema.validate(data);

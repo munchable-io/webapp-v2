@@ -5,33 +5,34 @@ const {
 	updateItem,
 	deleteItem,
 } = require("./item.controller");
+const verifyJwt = require("../../middleware/verifyJwt");
 
 /*
 @desc   Get all items
 @route  GET /items
-@access Private
+@access Public
 */
-router.get("/", getItems);
+router.get("/", verifyJwt, getItems);
 
 /*
 @desc   Create new item
 @route  POST /items
-@access Private
+@access Protected --> [admin, manager]
 */
-router.post("/", createItem);
+router.post("/", verifyJwt, createItem);
 
 /*
 @desc   Update item by id
 @route  PUT /items
-@access Private
+@access Protected --> [admin, manager]
 */
-router.put("/:id", updateItem);
+router.put("/:id", verifyJwt, updateItem);
 
 /*
 @desc   Delete item by id
 @route  DELETE /items
-@access Private
+@access Protected --> [admin, manager]
 */
-router.delete("/:id", deleteItem);
+router.delete("/:id", verifyJwt, deleteItem);
 
 module.exports = router;

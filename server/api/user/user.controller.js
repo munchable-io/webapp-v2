@@ -27,7 +27,7 @@ const sendOtp = async (req, res) => {
 		);
 
 		// send password to user's phone number
-		// TODO: impl
+		// TODO: implement ^
 
 		return res.status(200).json({ message: "OTP has been sent." });
 	} catch (err) {
