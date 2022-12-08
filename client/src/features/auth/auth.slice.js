@@ -8,7 +8,6 @@ const AUTH_URL = "http://localhost:5000/users/auth";
 // define initial state
 const initialState = {
 	user: {},
-	accessToken: undefined,
 	status: "idle", // idle | loading | succeeded | failed
 	error: null,
 };
@@ -45,7 +44,11 @@ export const handleLogin = createAsyncThunk("users/auth", async (payload) => {
 const authSlice = createSlice({
 	name: "auth",
 	initialState,
-	reducers: {},
+	reducers: {
+		setUser(state, action) {
+			state.user = action.payload;
+		},
+	},
 	extraReducers(builder) {
 		builder
 			.addCase(fetchUserByNumber.pending, (state, action) => {
@@ -53,7 +56,6 @@ const authSlice = createSlice({
 			})
 			.addCase(fetchUserByNumber.fulfilled, (state, action) => {
 				state.status = "succeeded";
-				state.user = action.payload;
 			})
 			.addCase(fetchUserByNumber.rejected, (state, action) => {
 				state.status = "failed";
@@ -74,10 +76,10 @@ const authSlice = createSlice({
 });
 
 // functions
-export const getAccessToken = (state) => state.auth.accessToken;
 export const getUser = (state) => state.auth.user;
 
 // actions
+export const { setUser } = authSlice.actions;
 
 // export reducer
 export default authSlice.reducer;
