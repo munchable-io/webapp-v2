@@ -26,7 +26,7 @@ const handleLogin = async (req, res) => {
 			const accessToken = jwt.sign(
 				{ user: { phoneNumber: user.phoneNumber, role: user.role } },
 				process.env.ACCESS_TOKEN_SECRET,
-				{ expiresIn: "30s" }
+				{ expiresIn: "15m" }
 			);
 			const refreshToken = jwt.sign(
 				{ phoneNumber: user.phoneNumber, role: user.role },
@@ -42,20 +42,19 @@ const handleLogin = async (req, res) => {
 			);
 
 			// send refreshToken as httpOnly cookie (max age of 1 day)
+			// secure: true --> in production for https
 			res.cookie("jwt", refreshToken, {
 				httpOnly: true,
 				maxAge: 24 * 60 * 60 * 1000,
-			}); // secure: true --> in production for https
+			});
 
 			// send accessToken as json
-			res
-				.status(200)
-				.json({
-					firstName: updatedUser.firstName,
-					lastName: updatedUser.lastName,
-					role: updatedUser.role,
-					accessToken: accessToken,
-				});
+			res.status(200).json({
+				firstName: updatedUser.firstName,
+				lastName: updatedUser.lastName,
+				role: updatedUser.role,
+				accessToken: accessToken,
+			});
 		} else {
 			res.status(400).json({ message: "Incorrect password." });
 		}

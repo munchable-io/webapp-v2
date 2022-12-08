@@ -15,16 +15,22 @@ import Dropdown from "../../ui/Dropdown/Dropdown";
 import EditorOption from "../EditorOption/EditorOption";
 import Button from "../../ui/Button/Button";
 import axios from "axios";
+import useAxiosPrivate from "../../auth/useAxiosPrivate";
 import { store } from "../../app/store";
 import {
 	addItemOption,
 	fetchItems,
 	getSelectedItem,
 } from "../../item/item.slice";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const EditorItemModal = forwardRef((props, ref) => {
 	const dispatch = useDispatch();
 	const item = useSelector(getSelectedItem);
+
+	const axiosPrivate = useAxiosPrivate();
+	const navigate = useNavigate();
+	const location = useLocation();
 
 	const [loading, setLoading] = useState(false);
 
@@ -71,13 +77,14 @@ const EditorItemModal = forwardRef((props, ref) => {
 
 	const addItem = async (payload) => {
 		try {
-			await axios.post("http://localhost:5000/items", payload);
+			await axiosPrivate.post("/items", payload);
 
 			store.dispatch(fetchItems());
 			props?.setIsComponentVisible(false);
 		} catch (err) {
-			alert("There was an error. Please check logs");
 			console.log(err);
+			// send to login on authentication failure
+			navigate("/login", { state: { from: location }, replace: true });
 		}
 	};
 

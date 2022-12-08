@@ -30,10 +30,16 @@ export const handleLogin = createAsyncThunk("users/auth", async (payload) => {
 	const { number, otp } = payload;
 	try {
 		// try and authenticate from http://localhost:5000/users/auth
-		const response = await axios.post(AUTH_URL, {
-			phoneNumber: number,
-			password: otp,
-		});
+		const response = await axios.post(
+			AUTH_URL,
+			{
+				phoneNumber: number,
+				password: otp,
+			},
+			{
+				withCredentials: true,
+			}
+		);
 		return response.data;
 	} catch (err) {
 		return false;
