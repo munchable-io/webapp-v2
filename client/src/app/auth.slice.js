@@ -17,6 +17,7 @@ export const fetchUserByNumber = createAsyncThunk(
 	"users/fetchUser",
 	async (num) => {
 		try {
+			// try and fetch number from http://localhost:5000/users/send/:number
 			await axios.get(`${USERS_URL}/send/${num}`);
 			return true;
 		} catch (err) {
