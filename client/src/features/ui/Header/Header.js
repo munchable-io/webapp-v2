@@ -1,33 +1,31 @@
-import { useEffect } from "react";
-import { useState } from "react";
 import { FiMenu, FiShoppingCart } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import CheckoutModal from "../../checkout/CheckoutModal";
 import Nav from "../../nav/Nav";
-import { setCheckoutModalOpen } from "../../restaurant/restaurant.slice";
 import { getOrderSize } from "../../users/users.slice";
 import useComponentVisible from "../hooks/useComponentVisible";
 import { HeaderCart, StyledHeader } from "./Header.styled";
 
 const Header = () => {
-	const dispatch = useDispatch();
 	const hasOrder = useSelector(getOrderSize) > 0;
-	const [navModalOpen, setNavModalOpen] = useState(false);
 
 	const {
 		ref: navModalRef,
 		isComponentVisible: isNavVisible,
 		setIsComponentVisible: setIsNavVisible,
-	} = useComponentVisible(navModalOpen);
+	} = useComponentVisible(false);
 
-	useEffect(() => {
-		setIsNavVisible(navModalOpen);
-	}, [navModalOpen]); // eslint-disable-line
+	const {
+		ref: checkoutRef,
+		isComponentVisible: isCheckoutVisible,
+		setIsComponentVisible: setIsCheckoutVisible,
+	} = useComponentVisible(false);
 
 	return (
 		<StyledHeader>
 			<div className="container headerWrapper">
 				<div className="headerLeft">
-					<FiMenu onClick={() => setNavModalOpen(!navModalOpen)} />
+					<FiMenu onClick={() => setIsNavVisible(!isNavVisible)} />
 				</div>
 				<div className="headerCenter">
 					<h1>Lucky Dynasty</h1>
@@ -35,19 +33,28 @@ const Header = () => {
 				<div className="headerRight">
 					<HeaderCart
 						hasOrder={hasOrder}
-						onClick={() => {
-							dispatch(setCheckoutModalOpen(true));
-						}}
+						onClick={() => setIsCheckoutVisible(!isCheckoutVisible)}
 					>
 						<FiShoppingCart />
 					</HeaderCart>
 				</div>
 			</div>
+
+			{/* nav modal */}
 			{isNavVisible && (
 				<Nav
 					ref={navModalRef}
 					modifyModal={(state) => setIsNavVisible(state)}
 					setIsNavVisible={setIsNavVisible}
+				/>
+			)}
+
+			{/* checkout modal */}
+			{isCheckoutVisible && (
+				<CheckoutModal
+					ref={checkoutRef}
+					modifyModal={(state) => setIsCheckoutVisible(state)}
+					setIsCheckoutVisible={setIsCheckoutVisible}
 				/>
 			)}
 		</StyledHeader>

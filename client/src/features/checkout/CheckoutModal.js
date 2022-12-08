@@ -1,6 +1,6 @@
+import { forwardRef } from "react";
 import { FiX } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
-import { setCheckoutModalOpen } from "../restaurant/restaurant.slice";
+import { useSelector } from "react-redux";
 import { getOrder } from "../users/users.slice";
 import {
 	CheckoutBody,
@@ -10,28 +10,24 @@ import {
 } from "./Checkout.styled";
 import CheckoutItem from "./CheckoutItem/CheckoutItem";
 
-const CheckoutModal = () => {
-	const dispatch = useDispatch();
+const CheckoutModal = forwardRef((props, ref) => {
 	const order = useSelector(getOrder);
-
 	const items = order.map((item) => <CheckoutItem key={item.id} item={item} />);
 
 	return (
-		<CheckoutWrapper>
-			<StyledCheckout>
-				<div className="container">
-					<CheckoutHeader>
-						<h2>Order Review:</h2>
-						<FiX onClick={() => dispatch(setCheckoutModalOpen(false))} />
-					</CheckoutHeader>
-					<CheckoutBody>
-						{order.length === 0 && <h4>Cart is currently empty</h4>}
-						{items}
-					</CheckoutBody>
-				</div>
-			</StyledCheckout>
-		</CheckoutWrapper>
+		<StyledCheckout ref={ref}>
+			<div className="container">
+				<CheckoutHeader>
+					<h2>Order Review:</h2>
+					<FiX onClick={() => props.modifyModal(false)} />
+				</CheckoutHeader>
+				<CheckoutBody>
+					{order.length === 0 && <h4>Cart is currently empty</h4>}
+					{items}
+				</CheckoutBody>
+			</div>
+		</StyledCheckout>
 	);
-};
+});
 
 export default CheckoutModal;

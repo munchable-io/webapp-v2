@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 
-const NavItem = ({ to, children, closeNav }) => {
+const NavItem = ({ to, children, modifyModal }) => {
+	const handleClick = () => {
+		modifyModal(false);
+	};
 	return (
-		<Link onClick={closeNav} to={to || ""}>
+		<Link onClick={handleClick} to={to || ""}>
 			{children}
 		</Link>
 	);

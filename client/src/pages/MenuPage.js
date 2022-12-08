@@ -1,8 +1,5 @@
-import { useSelector } from "react-redux";
-import CheckoutModal from "../features/checkout/CheckoutModal";
 import ItemModal from "../features/item/ItemModal";
 import ItemsList from "../features/item/ItemsList";
-import { getCheckoutModalOpen } from "../features/restaurant/restaurant.slice";
 import useComponentVisible from "../features/ui/hooks/useComponentVisible";
 import {
 	RestaurantHomeInfo,
@@ -10,10 +7,9 @@ import {
 } from "../features/restaurantHome/RestaurantHome.styled.";
 import { FiClock, FiMapPin, FiWatch } from "react-icons/fi";
 
-const RestaurantHome = () => {
+const MenuPage = () => {
 	const { ref, isComponentVisible, setIsComponentVisible } =
 		useComponentVisible(false);
-	const isCheckoutModalOpen = useSelector(getCheckoutModalOpen);
 
 	return (
 		<RestaurantHomeWrapper>
@@ -44,9 +40,8 @@ const RestaurantHome = () => {
 					modifyModal={(state) => setIsComponentVisible(state)}
 				/>
 			)}
-			{isCheckoutModalOpen && <CheckoutModal />}
 		</RestaurantHomeWrapper>
 	);
 };
 
-export default RestaurantHome;
+export default MenuPage;

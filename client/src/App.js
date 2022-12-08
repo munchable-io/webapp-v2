@@ -2,13 +2,13 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./features/routing/Layout";
 import LoginPage from "./pages/LoginPage";
 import MenuEditor from "./pages/MenuEditor";
-import RestaurantHome from "./pages/RestaurantHome";
+import MenuPage from "./pages/MenuPage";
 
 const App = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<Layout />}>
-				<Route index element={<RestaurantHome />} />
+				<Route index element={<MenuPage />} />
 
 				<Route path="login" element={<LoginPage />} />
 
