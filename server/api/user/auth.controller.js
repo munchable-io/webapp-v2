@@ -80,7 +80,7 @@ const getAccessToken = async (req, res) => {
 			process.env.REFRESH_TOKEN_SECRET,
 			(err, decodedData) => {
 				// forbidden if error or # doesn't match (we sent phone # in token)
-				if (err || user.phoneNumber !== decodedData.user.phoneNumber) {
+				if (err || user.phoneNumber !== decodedData.phoneNumber) {
 					return res.status(403).json({ message: "Forbidden." });
 				}
 
@@ -92,7 +92,7 @@ const getAccessToken = async (req, res) => {
 				);
 
 				// send accessToken as json
-				res.status(200).json(accessToken);
+				res.status(200).json({ accessToken: accessToken });
 			}
 		);
 	} catch (err) {
