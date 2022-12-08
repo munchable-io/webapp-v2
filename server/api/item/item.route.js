@@ -12,7 +12,7 @@ const verifyJwt = require("../../middleware/verifyJwt");
 @route  GET /items
 @access Public
 */
-router.get("/", verifyJwt, getItems);
+router.get("/", getItems);
 
 /*
 @desc   Create new item
