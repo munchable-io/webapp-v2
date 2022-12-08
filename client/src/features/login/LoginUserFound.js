@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { handleLogin, setUser } from "../auth/auth.slice";
 import Button from "../ui/Button/Button";
@@ -9,11 +9,16 @@ import { LoginSection, StyledLoginModal } from "./Login.styled";
 
 const LoginUserFound = () => {
 	const dispatch = useDispatch();
-
 	const navigate = useNavigate();
+	const location = useLocation();
+
+	// get from location
+	const from = location.state?.from?.pathname || "/";
+
+	// get phone number
+	const number = useSelector(getPhoneNumber);
 
 	const [otp, setOtp] = useState("");
-	const number = useSelector(getPhoneNumber); // get phone number
 
 	const handleSubmit = async () => {
 		// authentication
@@ -37,19 +42,20 @@ const LoginUserFound = () => {
 				})
 			);
 
-			// redirect to wherever user came from
-			navigate("/");
+			// clear out fields
+			setOtp("");
 
 			// reset login screen
 			dispatch(setScreen("phoneNumber"));
 
-			alert("Successfully logged in.");
+			// redirect to wherever user came from
+			navigate(from, { replace: true });
 		} else {
+			// clear out fields
+			setOtp("");
+
 			alert("Yeet wrong password boi");
 		}
-
-		// clear out fields
-		setOtp("");
 	};
 
 	return (
