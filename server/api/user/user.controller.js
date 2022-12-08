@@ -45,7 +45,12 @@ const sendOtp = async (req, res) => {
 			to: req.params.number,
 		});
 
-		return res.status(200).json(message);
+		return res
+			.status(200)
+			.json({
+				firstName: updatedUser.firstName,
+				lastName: updatedUser.lastName,
+			});
 	} catch (err) {
 		return res.status(400).json({ message: err });
 	}
