@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchUserByNumber } from "../../app/auth.slice";
-import { store } from "../../app/store";
+import { fetchUserByNumber } from "../auth/auth.slice";
+import { store } from "../app/store";
 import Button from "../ui/Button/Button";
 import Input from "../ui/Input/Input";
 import { setPhoneNumber, setScreen } from "./login.slice";

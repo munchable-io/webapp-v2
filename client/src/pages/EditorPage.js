@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { resetSelectedItem } from "../app/item.slice";
+import { resetSelectedItem } from "../features/item/item.slice";
 import { StyledMenuEditor } from "../features/editor/Editor.styled";
 import EditorItemModal from "../features/editor/EditorItemModal/EditorItemModal";
 import EditorItemsList from "../features/editor/EditorItemsList";

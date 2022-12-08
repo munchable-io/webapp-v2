@@ -1,6 +1,6 @@
 import { FiX } from "react-icons/fi";
 import { useDispatch } from "react-redux";
-import { removeOptionChoice } from "../../../app/item.slice";
+import { removeOptionChoice } from "../../item/item.slice";
 import { StyledChoice } from "./Choice.styled";
 
 const Choice = ({ choice, optionId }) => {

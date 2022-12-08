@@ -1,7 +1,7 @@
 import { FiMenu, FiShoppingCart } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import CheckoutModal from "../../checkout/CheckoutModal";
-import Nav from "../../nav/Nav";
+import Nav from "../Nav/Nav";
 import { getOrderSize } from "../../users/users.slice";
 import useComponentVisible from "../hooks/useComponentVisible";
 import { HeaderCart, StyledHeader } from "./Header.styled";

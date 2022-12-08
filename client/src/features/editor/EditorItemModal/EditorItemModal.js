@@ -2,11 +2,6 @@ import { forwardRef } from "react";
 import { FiX } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import {
-	addItemOption,
-	fetchItems,
-	getSelectedItem,
-} from "../../../app/item.slice";
-import {
 	ModalBody,
 	ModalFooter,
 	ModalHeader,
@@ -20,7 +15,12 @@ import Dropdown from "../../ui/Dropdown/Dropdown";
 import EditorOption from "../EditorOption/EditorOption";
 import Button from "../../ui/Button/Button";
 import axios from "axios";
-import { store } from "../../../app/store";
+import { store } from "../../app/store";
+import {
+	addItemOption,
+	fetchItems,
+	getSelectedItem,
+} from "../../item/item.slice";
 
 const EditorItemModal = forwardRef((props, ref) => {
 	const dispatch = useDispatch();

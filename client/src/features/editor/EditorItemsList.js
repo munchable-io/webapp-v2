@@ -1,9 +1,5 @@
 import { useSelector } from "react-redux";
-import {
-	getAllItems,
-	getItemsError,
-	getItemsState,
-} from "../../app/item.slice";
+import { getAllItems, getItemsError, getItemsState } from "../item/item.slice";
 import { StyledEditorItemList } from "./EditorItem.styled";
 import EditorItemCard from "./EditorItemCard";
 

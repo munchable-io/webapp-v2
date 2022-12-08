@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, handleLogin } from "../../app/auth.slice";
+import { getUser, handleLogin } from "../auth/auth.slice";
 import Button from "../ui/Button/Button";
 import Input from "../ui/Input/Input";
 import { getPhoneNumber } from "./login.slice";

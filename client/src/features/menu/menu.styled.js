@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import restaurantImg from "../../static/restaurant.jpeg";
+import restaurantImg from "./restaurant.jpeg";
 
-export const RestaurantHomeWrapper = styled.div`
+export const MenuWrapper = styled.div`
 	div.heroImg {
 		border-radius: 8px;
 		background-image: linear-gradient(
@@ -20,7 +20,7 @@ export const RestaurantHomeWrapper = styled.div`
 	}
 `;
 
-export const RestaurantHomeInfo = styled.ul`
+export const MenuInfo = styled.ul`
 	display: flex;
 	align-items: center;
 	gap: 1rem;

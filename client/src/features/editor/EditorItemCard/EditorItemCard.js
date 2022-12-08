@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { setSelectedItem } from "../../../app/item.slice";
+import { setSelectedItem } from "../../item/item.slice";
 import { StyledEditorItemCard } from "./EditorItemCard.styled";
 
 const EditorItemCard = ({ item, modifyModal }) => {

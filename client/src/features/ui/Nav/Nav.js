@@ -1,4 +1,4 @@
-import { FiEdit, FiHome, FiLogIn, FiX } from "react-icons/fi";
+import { FiEdit, FiFileText, FiLogIn, FiX } from "react-icons/fi";
 import { forwardRef } from "react";
 import { NavItems, StyledNav } from "./Nav.styled";
 import NavItem from "./NavItem";
@@ -10,8 +10,8 @@ const Nav = forwardRef(({ modifyModal }, ref) => {
 				<FiX onClick={() => modifyModal(false)} />
 				<NavItems>
 					<NavItem to="/" modifyModal={modifyModal}>
-						<FiHome />
-						<p className="sm">Home</p>
+						<FiFileText />
+						<p className="sm">Menu</p>
 					</NavItem>
 					<NavItem to="/editor" modifyModal={modifyModal}>
 						<FiEdit />

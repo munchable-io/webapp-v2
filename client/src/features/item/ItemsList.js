@@ -1,9 +1,5 @@
 import { useSelector } from "react-redux";
-import {
-	getAllItems,
-	getItemsError,
-	getItemsState,
-} from "../../app/item.slice";
+import { getAllItems, getItemsError, getItemsState } from "./item.slice";
 // import Categories from "./Categories/Categories";
 import { StyledItemList } from "./Item.styled";
 import ItemCard from "./ItemCard";

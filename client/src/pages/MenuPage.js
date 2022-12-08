@@ -1,10 +1,7 @@
 import ItemModal from "../features/item/ItemModal";
 import ItemsList from "../features/item/ItemsList";
 import useComponentVisible from "../features/ui/hooks/useComponentVisible";
-import {
-	RestaurantHomeInfo,
-	RestaurantHomeWrapper,
-} from "../features/restaurantHome/RestaurantHome.styled.";
+import { MenuInfo, MenuWrapper } from "../features/menu/menu.styled";
 import { FiClock, FiMapPin, FiWatch } from "react-icons/fi";
 
 const MenuPage = () => {
@@ -12,13 +9,13 @@ const MenuPage = () => {
 		useComponentVisible(false);
 
 	return (
-		<RestaurantHomeWrapper>
+		<MenuWrapper>
 			{/* page content  */}
 			<div className="container flex-column">
 				<div className="heroImg">
 					<p className="xs">Chinese Fast Food</p>
 					<h2>Lucky Dynasty</h2>
-					<RestaurantHomeInfo>
+					<MenuInfo>
 						<li>
 							<FiMapPin />
 							<p className="xs">Address Goes Here</p>
@@ -31,7 +28,7 @@ const MenuPage = () => {
 							<FiWatch />
 							<p className="xs">Estimated Wait: 30 min</p>
 						</li>
-					</RestaurantHomeInfo>
+					</MenuInfo>
 				</div>
 				<ItemsList modifyModal={(state) => setIsComponentVisible(state)} />
 			</div>
@@ -43,7 +40,7 @@ const MenuPage = () => {
 					modifyModal={(state) => setIsComponentVisible(state)}
 				/>
 			)}
-		</RestaurantHomeWrapper>
+		</MenuWrapper>
 	);
 };
 

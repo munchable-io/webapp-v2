@@ -6,7 +6,7 @@ import {
 	setOptionName,
 	setOptionRequired,
 	setOptionSelectionType,
-} from "../../../app/item.slice";
+} from "../../item/item.slice";
 import Button from "../../ui/Button/Button";
 import Checkbox from "../../ui/Checkbox/Checkbox";
 import Input from "../../ui/Input/Input";
