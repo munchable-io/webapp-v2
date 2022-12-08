@@ -1,6 +1,13 @@
 const User = require("./user.model");
 const userValidation = require("./user.validate");
 const bcrypt = require("bcrypt");
+require("dotenv").config();
+
+//twilio stuff
+const twilioClient = require("twilio")(
+	process.env.TWILIO_SID,
+	process.env.TWILIO_TOKEN
+);
 
 const getUsers = async (req, res) => {
 	const users = await User.find();
@@ -15,9 +22,14 @@ const sendOtp = async (req, res) => {
 			return res.status(401).json({ message: "User not found." });
 		}
 
+		// generate a otp
+		let otp = "";
+		for (let i = 0; i < 6; i++) {
+			otp += Math.floor(Math.random(1) * 10).toString();
+		}
+
 		// create a pwd for user
-		const pwd = "secretpwd123";
-		const hashedPwd = await bcrypt.hash(pwd, 10);
+		const hashedPwd = await bcrypt.hash(otp, 10);
 
 		// update user with new password
 		const updatedUser = await User.findOneAndUpdate(
@@ -27,9 +39,13 @@ const sendOtp = async (req, res) => {
 		);
 
 		// send password to user's phone number
-		// TODO: implement ^
+		const message = await twilioClient.messages.create({
+			body: `Your Munchable security code is ${otp}`,
+			from: "+14302555327",
+			to: req.params.number,
+		});
 
-		return res.status(200).json({ message: "OTP has been sent." });
+		return res.status(200).json(message);
 	} catch (err) {
 		return res.status(400).json({ message: err });
 	}
