@@ -24,12 +24,12 @@ const handleLogin = async (req, res) => {
 		if (match) {
 			// create JWTs
 			const accessToken = jwt.sign(
-				{ phoneNumber: user.phoneNumber },
+				{ user: { phoneNumber: user.phoneNumber, role: user.role } },
 				process.env.ACCESS_TOKEN_SECRET,
 				{ expiresIn: "30s" }
 			);
 			const refreshToken = jwt.sign(
-				{ phoneNumber: user.phoneNumber },
+				{ phoneNumber: user.phoneNumber, role: user.role },
 				process.env.REFRESH_TOKEN_SECRET,
 				{ expiresIn: "1d" }
 			);
@@ -80,13 +80,13 @@ const getAccessToken = async (req, res) => {
 			process.env.REFRESH_TOKEN_SECRET,
 			(err, decodedData) => {
 				// forbidden if error or # doesn't match (we sent phone # in token)
-				if (err || user.phoneNumber !== decodedData.phoneNumber) {
+				if (err || user.phoneNumber !== decodedData.user.phoneNumber) {
 					return res.status(403).json({ message: "Forbidden." });
 				}
 
 				// create new access token
 				const accessToken = jwt.sign(
-					{ phoneNumber: user.phoneNumber },
+					{ user: { phoneNumber: user.phoneNumber, role: user.role } },
 					process.env.ACCESS_TOKEN_SECRET,
 					{ expiresIn: "30s" }
 				);
