@@ -48,7 +48,14 @@ const handleLogin = async (req, res) => {
 			}); // secure: true --> in production for https
 
 			// send accessToken as json
-			res.status(200).json({ accessToken });
+			res
+				.status(200)
+				.json({
+					firstName: updatedUser.firstName,
+					lastName: updatedUser.lastName,
+					role: updatedUser.role,
+					accessToken: accessToken,
+				});
 		} else {
 			res.status(400).json({ message: "Incorrect password." });
 		}
