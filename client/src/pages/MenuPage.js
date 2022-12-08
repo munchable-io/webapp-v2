@@ -13,6 +13,7 @@ const MenuPage = () => {
 
 	return (
 		<RestaurantHomeWrapper>
+			{/* page content  */}
 			<div className="container flex-column">
 				<div className="heroImg">
 					<p className="xs">Chinese Fast Food</p>
@@ -34,6 +35,8 @@ const MenuPage = () => {
 				</div>
 				<ItemsList modifyModal={(state) => setIsComponentVisible(state)} />
 			</div>
+
+			{/* item modal  */}
 			{isComponentVisible && (
 				<ItemModal
 					ref={ref}

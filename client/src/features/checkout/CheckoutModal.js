@@ -5,7 +5,6 @@ import { getOrder } from "../users/users.slice";
 import {
 	CheckoutBody,
 	CheckoutHeader,
-	CheckoutWrapper,
 	StyledCheckout,
 } from "./Checkout.styled";
 import CheckoutItem from "./CheckoutItem/CheckoutItem";

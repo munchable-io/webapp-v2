@@ -6,20 +6,14 @@ import EditorItemsList from "../features/editor/EditorItemsList";
 import Button from "../features/ui/Button/Button";
 import useComponentVisible from "../features/ui/hooks/useComponentVisible";
 
-const MenuEditor = () => {
+const EditorPage = () => {
 	const dispatch = useDispatch();
 	const { ref, isComponentVisible, setIsComponentVisible } =
 		useComponentVisible(false);
 
 	return (
 		<>
-			{isComponentVisible && (
-				<EditorItemModal
-					ref={ref}
-					setIsComponentVisible={setIsComponentVisible}
-					modifyModal={(state) => setIsComponentVisible(state)}
-				/>
-			)}
+			{/* page content */}
 			<div className="container">
 				<StyledMenuEditor>
 					<div className="row">
@@ -37,8 +31,17 @@ const MenuEditor = () => {
 					/>
 				</StyledMenuEditor>
 			</div>
+
+			{/* editor modal */}
+			{isComponentVisible && (
+				<EditorItemModal
+					ref={ref}
+					setIsComponentVisible={setIsComponentVisible}
+					modifyModal={(state) => setIsComponentVisible(state)}
+				/>
+			)}
 		</>
 	);
 };
 
-export default MenuEditor;
+export default EditorPage;

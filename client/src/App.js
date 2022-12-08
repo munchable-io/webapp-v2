@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./features/routing/Layout";
+import EditorPage from "./pages/EditorPage";
 import LoginPage from "./pages/LoginPage";
-import MenuEditor from "./pages/MenuEditor";
 import MenuPage from "./pages/MenuPage";
 
 const App = () => {
@@ -12,7 +12,7 @@ const App = () => {
 
 				<Route path="login" element={<LoginPage />} />
 
-				<Route path="editor" element={<MenuEditor />} />
+				<Route path="editor" element={<EditorPage />} />
 
 				<Route path="*" element={<Navigate to="/" replace />} />
 			</Route>
