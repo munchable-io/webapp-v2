@@ -17,11 +17,10 @@ export const fetchUserByNumber = createAsyncThunk(
 	"users/fetchUser",
 	async (num) => {
 		try {
-			// const response = await axios.post(`${USERS_URL}/${num}`);
-			console.log(num);
-			return num;
+			await axios.get(`${USERS_URL}/send/${num}`);
+			return true;
 		} catch (err) {
-			return err.message;
+			return false;
 		}
 	}
 );
