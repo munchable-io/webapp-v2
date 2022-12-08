@@ -12,7 +12,7 @@ const sendOtp = async (req, res) => {
 		// find user by phone number
 		const user = await User.findOne({ phoneNumber: req.params.number }).exec();
 		if (!user) {
-			return res.status(400).json({ message: "User not found." });
+			return res.status(401).json({ message: "User not found." });
 		}
 
 		// create a pwd for user
