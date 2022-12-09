@@ -1,9 +1,23 @@
-import { FiEdit, FiFileText, FiLogIn, FiX } from "react-icons/fi";
+import { FiEdit, FiFileText, FiLogIn, FiLogOut, FiX } from "react-icons/fi";
 import { forwardRef } from "react";
 import { NavItems, StyledNav } from "./Nav.styled";
 import NavItem from "./NavItem";
+import { useNavigate } from "react-router-dom";
+import useLogout from "../../auth/useLogout";
 
 const Nav = forwardRef(({ modifyModal }, ref) => {
+	const navigate = useNavigate();
+	const logout = useLogout();
+
+	const handleLogout = async () => {
+		try {
+			await logout();
+			navigate("/");
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
 	return (
 		<StyledNav ref={ref}>
 			<div className="container">
@@ -20,6 +34,10 @@ const Nav = forwardRef(({ modifyModal }, ref) => {
 					<NavItem to="/login" modifyModal={modifyModal}>
 						<FiLogIn />
 						<p className="sm">Register / Login</p>
+					</NavItem>
+					<NavItem onClick={handleLogout} modifyModal={modifyModal}>
+						<FiLogOut />
+						<p className="sm">Logout</p>
 					</NavItem>
 				</NavItems>
 			</div>

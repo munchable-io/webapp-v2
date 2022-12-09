@@ -98,7 +98,7 @@ const getAccessToken = async (req, res) => {
 				);
 
 				// send accessToken as json
-				res.status(200).json({ accessToken: accessToken });
+				res.status(200).json({ accessToken: accessToken, role: user.role });
 			}
 		);
 	} catch (err) {

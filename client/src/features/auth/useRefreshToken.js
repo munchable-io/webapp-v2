@@ -15,9 +15,10 @@ const useRefreshToken = () => {
 
 			// get access token
 			const accessToken = response.data.accessToken;
+			const role = response.data.role;
 
 			// give user updated access token
-			dispatch(setUser({ ...auth, accessToken }));
+			dispatch(setUser({ ...auth, accessToken, role }));
 
 			return accessToken;
 		} catch (err) {
