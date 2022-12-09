@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
+import Loading from "../ui/Loading/Loading";
 import { getUser } from "./auth.slice";
 import useRefreshToken from "./useRefreshToken";
 
@@ -29,7 +30,7 @@ const PersistLogin = () => {
 		};
 	}, []); // eslint-disable-line
 
-	return <>{isLoading ? <p>Loading...</p> : <Outlet />}</>;
+	return <>{isLoading ? <Loading /> : <Outlet />}</>;
 };
 
 export default PersistLogin;

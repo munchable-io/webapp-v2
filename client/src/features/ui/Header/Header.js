@@ -5,6 +5,7 @@ import Nav from "../Nav/Nav";
 import { getOrderSize } from "../../users/users.slice";
 import useComponentVisible from "../hooks/useComponentVisible";
 import { HeaderCart, StyledHeader } from "./Header.styled";
+import { Link } from "react-router-dom";
 
 const Header = () => {
 	const hasOrder = useSelector(getOrderSize) > 0;
@@ -28,7 +29,9 @@ const Header = () => {
 					<FiMenu onClick={() => setIsNavVisible(!isNavVisible)} />
 				</div>
 				<div className="headerCenter">
-					<h1>Lucky Dynasty</h1>
+					<h1>
+						<Link to="/">Lucky Dynasty</Link>
+					</h1>
 				</div>
 				<div className="headerRight">
 					<HeaderCart

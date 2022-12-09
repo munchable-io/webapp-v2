@@ -38,6 +38,11 @@ export const StyledHeader = styled.header`
 		h1 {
 			color: var(--restaurant-primary);
 			text-align: center;
+
+			a {
+				color: inherit;
+				text-decoration: none;
+			}
 		}
 	}
 `;
