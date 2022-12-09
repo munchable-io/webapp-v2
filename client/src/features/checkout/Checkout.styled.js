@@ -37,5 +37,11 @@ export const CheckoutHeader = styled.header`
 export const CheckoutBody = styled.main`
 	display: flex;
 	flex-direction: column;
-	row-gap: 1rem;
+	row-gap: 3rem;
+`;
+
+export const CheckoutItems = styled.section`
+	display: flex;
+	flex-direction: column;
+	row-gap: 0.5rem;
 `;
