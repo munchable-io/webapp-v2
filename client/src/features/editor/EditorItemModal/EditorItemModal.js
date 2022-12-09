@@ -14,7 +14,6 @@ import Textbox from "../../ui/Textbox/Textbox";
 import Dropdown from "../../ui/Dropdown/Dropdown";
 import EditorOption from "../EditorOption/EditorOption";
 import Button from "../../ui/Button/Button";
-import axios from "axios";
 import useAxiosPrivate from "../../auth/useAxiosPrivate";
 import { store } from "../../app/store";
 import {
@@ -90,7 +89,7 @@ const EditorItemModal = forwardRef((props, ref) => {
 
 	const updateItem = async (payload) => {
 		try {
-			await axios.put(`http://localhost:5000/items/${item?._id}`, payload);
+			await axiosPrivate.put(`/items/${item?._id}`, payload);
 
 			store.dispatch(fetchItems());
 			props?.setIsComponentVisible(false);
@@ -102,7 +101,7 @@ const EditorItemModal = forwardRef((props, ref) => {
 
 	const deleteItem = async (payload) => {
 		try {
-			await axios.delete(`http://localhost:5000/items/${item?._id}`, payload);
+			await axiosPrivate.delete(`/items/${item?._id}`, payload);
 
 			store.dispatch(fetchItems());
 			props?.setIsComponentVisible(false);

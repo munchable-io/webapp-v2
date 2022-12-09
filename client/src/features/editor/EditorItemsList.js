@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { getAllItems, getItemsError, getItemsState } from "../item/item.slice";
 import { StyledEditorItemList } from "./EditorItem.styled";
 import EditorItemCard from "./EditorItemCard";
+import Loading from "../ui/Loading/Loading";
 
 const EditorItemsList = ({ modifyModal }) => {
 	const items = {
@@ -12,7 +13,7 @@ const EditorItemsList = ({ modifyModal }) => {
 
 	let content;
 	if (items.status === "loading") {
-		content = <h3>Loading...</h3>;
+		content = <Loading />;
 	} else if (items.status === "failed") {
 		content = <h3>{items.erorr}</h3>;
 	} else if (items.status === "succeeded") {
