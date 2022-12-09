@@ -42,9 +42,34 @@ export const handleLogin = createAsyncThunk("users/auth", async (payload) => {
 		);
 		return response.data;
 	} catch (err) {
+		console.error(err);
 		return false;
 	}
 });
+
+export const handleCreateAccount = createAsyncThunk(
+	"users/create",
+	async (payload) => {
+		const { firstName, lastName, phoneNumber, email } = payload;
+		try {
+			const response = await axios.post(
+				USERS_URL,
+				{
+					firstName,
+					lastName,
+					phoneNumber,
+					email,
+					role: "user",
+				},
+				{ withCredentials: true }
+			);
+			return response.data;
+		} catch (err) {
+			console.error(err);
+			return false;
+		}
+	}
+);
 
 // auth slice
 const authSlice = createSlice({
@@ -77,12 +102,23 @@ const authSlice = createSlice({
 			.addCase(handleLogin.rejected, (state, action) => {
 				state.status = "failed";
 				state.error = action.error.message;
+			})
+			.addCase(handleCreateAccount.pending, (state, action) => {
+				state.status = "loading";
+			})
+			.addCase(handleCreateAccount.fulfilled, (state, action) => {
+				state.status = "succeeded";
+			})
+			.addCase(handleCreateAccount.rejected, (state, action) => {
+				state.status = "failed";
+				state.error = action.error.message;
 			});
 	},
 });
 
 // functions
 export const getUser = (state) => state.auth.user;
+export const getStatus = (state) => state.auth.status;
 
 // actions
 export const { setUser } = authSlice.actions;

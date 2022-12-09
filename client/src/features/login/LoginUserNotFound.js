@@ -1,15 +1,62 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { store } from "../app/store";
+import { fetchUserByNumber, handleCreateAccount } from "../auth/auth.slice";
 import Button from "../ui/Button/Button";
 import Input from "../ui/Input/Input";
+import { getPhoneNumber, setScreen } from "./login.slice";
 import { LoginSection, StyledLoginModal } from "./Login.styled";
 
 const LoginUserNotFound = () => {
+	const dispatch = useDispatch();
+
+	// get phone number
+	const phoneNumber = useSelector(getPhoneNumber);
+
+	// form data
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
 
-	const handleCreateAccount = async () => {
-		alert("Creating account...");
+	const sendOtp = async () => {
+		// send otp to number
+		try {
+			const result = await store.dispatch(fetchUserByNumber(phoneNumber));
+			if (result.payload) {
+				// clear input fields
+				setFirstName("");
+				setLastName("");
+				setEmail("");
+
+				// move to userFound screen
+				dispatch(setScreen("userFound"));
+			} else {
+				// idk how this could be reached
+				alert("Sorry, you cannot be logged in at this time.");
+				console.log(result.payload);
+
+				// clear input fields
+				setFirstName("");
+				setLastName("");
+				setEmail("");
+
+				// go back to phone number screen
+				dispatch(setScreen("phoneNumber"));
+			}
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	const handleCreateAcc = async () => {
+		try {
+			await dispatch(
+				handleCreateAccount({ firstName, lastName, phoneNumber, email })
+			);
+			sendOtp();
+		} catch (err) {
+			console.error(err);
+		}
 	};
 
 	return (
@@ -42,11 +89,7 @@ const LoginUserNotFound = () => {
 				/>
 			</LoginSection>
 			<LoginSection>
-				<Button
-					onClick={handleCreateAccount}
-					value="Create Account"
-					width="100%"
-				/>
+				<Button onClick={handleCreateAcc} value="Create Account" width="100%" />
 			</LoginSection>
 		</StyledLoginModal>
 	);
