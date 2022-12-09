@@ -7,6 +7,13 @@ export const StyledCheckout = styled.section`
 	width: 500px;
 	height: 100%;
 	background: white;
+	overflow-y: scroll;
+	-ms-overflow-style: none; /* Internet Explorer 10+ */
+	scrollbar-width: none; /* Firefox */
+
+	&::-webkit-scrollbar {
+		display: none; /* Safari and Chrome */
+	}
 
 	div.container {
 		display: flex;
@@ -38,6 +45,7 @@ export const CheckoutBody = styled.main`
 	display: flex;
 	flex-direction: column;
 	row-gap: 3rem;
+	padding: 2rem 0;
 `;
 
 export const CheckoutItems = styled.section`

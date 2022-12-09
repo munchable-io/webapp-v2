@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 	order: [],
+	tip: 0.18,
 };
 
 const usersSlice = createSlice({
@@ -32,15 +33,19 @@ const usersSlice = createSlice({
 				state.order[index].qty += action.payload.amt;
 			}
 		},
+		setTip(state, action) {
+			state.tip = action.payload;
+		},
 	},
 });
 
 // functions
 export const getOrder = (state) => state.users.order;
 export const getOrderSize = (state) => state.users.order.length;
+export const getTip = (state) => state.users.tip;
 
 // actions
-export const { addItemToOrder, removeItemFromOrder, incrementQty } =
+export const { addItemToOrder, removeItemFromOrder, incrementQty, setTip } =
 	usersSlice.actions;
 
 // export reducer

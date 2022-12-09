@@ -1,6 +1,6 @@
 import { SummaryRow, SummaryWrapper } from "./CheckoutSummary.styled";
 
-const CheckoutSummary = ({ order, tax, fee }) => {
+const CheckoutSummary = ({ order, tax, tip, fee }) => {
 	// calculate the cost of all items
 	const getOrderSubtotal = () => {
 		let total = 0;
@@ -10,11 +10,13 @@ const CheckoutSummary = ({ order, tax, fee }) => {
 
 	const subtotalAmount = getOrderSubtotal();
 	const taxAmount = tax * subtotalAmount;
+	const tipAmount = tip * subtotalAmount;
 	const feeAmount = fee * subtotalAmount;
 	const totalAmount = subtotalAmount + taxAmount + feeAmount;
 
 	return (
 		<SummaryWrapper>
+			<h4>Order Summary</h4>
 			<SummaryRow>
 				<p className="description">Subtotal:</p>
 				<p className="content">${subtotalAmount.toFixed(2)}</p>
@@ -22,6 +24,10 @@ const CheckoutSummary = ({ order, tax, fee }) => {
 			<SummaryRow>
 				<p className="description">Tax:</p>
 				<p className="content">${taxAmount.toFixed(2)}</p>
+			</SummaryRow>
+			<SummaryRow>
+				<p className="description">Tip:</p>
+				<p className="content">${tipAmount.toFixed(2)}</p>
 			</SummaryRow>
 			<SummaryRow>
 				<p className="description">Fees:</p>
