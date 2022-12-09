@@ -26,12 +26,12 @@ const handleLogin = async (req, res) => {
 			const accessToken = jwt.sign(
 				{ user: { phoneNumber: user.phoneNumber, role: user.role } },
 				process.env.ACCESS_TOKEN_SECRET,
-				{ expiresIn: "15m" }
+				{ expiresIn: "90s" }
 			);
 			const refreshToken = jwt.sign(
 				{ phoneNumber: user.phoneNumber, role: user.role },
 				process.env.REFRESH_TOKEN_SECRET,
-				{ expiresIn: "1d" }
+				{ expiresIn: "7d" }
 			);
 
 			// saving refreshToken for current user
@@ -45,7 +45,7 @@ const handleLogin = async (req, res) => {
 			// secure: true --> in production for https
 			res.cookie("jwt", refreshToken, {
 				httpOnly: true,
-				maxAge: 24 * 60 * 60 * 1000,
+				maxAge: 7 * 24 * 60 * 60 * 1000,
 			});
 
 			// send accessToken as json
@@ -94,7 +94,7 @@ const getAccessToken = async (req, res) => {
 				const accessToken = jwt.sign(
 					{ user: { phoneNumber: user.phoneNumber, role: user.role } },
 					process.env.ACCESS_TOKEN_SECRET,
-					{ expiresIn: "30s" }
+					{ expiresIn: "90s" }
 				);
 
 				// send accessToken as json
@@ -123,7 +123,7 @@ const handleLogout = async (req, res) => {
 		if (!user) {
 			res.clearCookie("jwt", refreshToken, {
 				httpOnly: true,
-				maxAge: 24 * 60 * 60 * 1000,
+				maxAge: 7 * 24 * 60 * 60 * 1000,
 			});
 			return res.status(204).json({ message: "No content." });
 		}
@@ -138,7 +138,7 @@ const handleLogout = async (req, res) => {
 		// delete cookie
 		res.clearCookie("jwt", refreshToken, {
 			httpOnly: true,
-			maxAge: 24 * 60 * 60 * 1000,
+			maxAge: 7 * 24 * 60 * 60 * 1000,
 		});
 
 		return res.status(204).json({ message: "No content." });
