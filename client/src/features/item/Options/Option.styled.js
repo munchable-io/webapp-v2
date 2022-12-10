@@ -26,7 +26,9 @@ export const StyledChoice = styled.li`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	border: 1px solid var(--primary-gray);
+	border: 1px solid
+		${(props) =>
+			props.selected ? "var(--primary-blue)" : "var(--primary-light-blue)"};
 	padding: 0.25rem 0.5rem;
 	border-radius: 4px;
 	transition: all 0.25s;
@@ -35,8 +37,10 @@ export const StyledChoice = styled.li`
 
 	&:hover {
 		cursor: pointer;
-		background: var(--primary-light-blue);
+		background: ${(props) =>
+			props.selected ? "var(--primary-blue)" : "var(--primary-light-blue)"};
 		color: white;
-		border-color: var(--primary-light-blue);
+		border-color: ${(props) =>
+			props.selected ? "var(--primary-blue)" : "var(--primary-light-blue)"};
 	}
 `;
