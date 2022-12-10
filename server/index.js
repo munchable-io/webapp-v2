@@ -18,8 +18,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 // routes
-app.use("/users", require("./api/user/user.route"));
-app.use("/items", require("./api/item/item.route"));
+app.use("/users", require("./api/user"));
+app.use("/items", require("./api/item"));
+app.use("/orders", require("./api/order"));
 
 // connect to server
 app.listen(PORT, (err) => {
