@@ -1,73 +1,74 @@
-import { useEffect, useState } from "react";
-import { BiX } from "react-icons/bi";
+import { useEffect } from "react";
 import {
-	RiCheckboxCircleFill,
-	RiInformationFill,
-	RiErrorWarningFill,
-	RiQuestionFill,
-} from "react-icons/ri";
-import { StyledToast } from "./Toast.styled";
+	FiAlertCircle,
+	FiAlertOctagon,
+	FiAlertTriangle,
+	FiCheckCircle,
+	FiX,
+} from "react-icons/fi";
+import { useDispatch } from "react-redux";
+import { removeToast } from "./Toast.slice";
 
-const Toast = ({ status, title, message, deleteToast }) => {
-	const [color, setColor] = useState("");
+import { StyledToast, ToastBody } from "./Toast.styled";
 
-	useEffect(() => {
-		switch (status.toLowerCase()) {
+const Toast = ({ toast }) => {
+	const dispatch = useDispatch();
+
+	const getColor = () => {
+		switch (toast?.status?.toLowerCase()) {
 			case "success":
-				setColor("#2ecc71");
-				break;
+				return "#00b894";
 			case "warning":
-				setColor("#f39c12");
-				break;
+				return "#fdcb6e";
 			case "error":
-				setColor("#c0392b");
-				break;
+				return "#d63031";
 			case "info":
-				setColor("#3498db");
-				break;
+				return "#0984e3";
 			default:
-				setColor("#b2bec3");
-				break;
+				return "#0984e3";
 		}
-	}, [status]);
+	};
+
+	const getIcon = () => {
+		switch (toast?.status?.toLowerCase()) {
+			case "success":
+				return <FiCheckCircle />;
+			case "warning":
+				return <FiAlertTriangle />;
+			case "error":
+				return <FiAlertOctagon />;
+			case "info":
+				return <FiAlertCircle />;
+			default:
+				return <FiAlertCircle />;
+		}
+	};
+	const icon = getIcon();
+
+	const handleClick = () => {
+		dispatch(removeToast(toast.id));
+	};
 
 	useEffect(() => {
-		const timer = setTimeout(() => {
-			deleteToast();
-		}, 2500);
-
-		return () => clearTimeout(timer);
-	});
+		setTimeout(() => {
+			dispatch(removeToast(toast.id));
+		}, 4000);
+	}, []); // eslint-disable-line
 
 	return (
-		<StyledToast color={color}>
-			<div className="toastContainer">
-				<div className="toastContent">
-					<ToastIcon color={color} status={status} />
-					<div className="toastBody">
-						<h4>{title}</h4>
-						<p>{message}</p>
-					</div>
+		<StyledToast>
+			<ToastBody color={getColor()}>
+				<div className="icon">{icon}</div>
+				<div className="content">
+					<p className="sm">{toast.header}</p>
+					<p className="xs second">{toast.body}</p>
 				</div>
-				<BiX onClick={deleteToast} />
-			</div>
+				<div className="exitIcon">
+					<FiX onClick={handleClick} />
+				</div>
+			</ToastBody>
 		</StyledToast>
 	);
-};
-
-const ToastIcon = ({ status }) => {
-	switch (status.toLowerCase()) {
-		case "success":
-			return <RiCheckboxCircleFill />;
-		case "warning":
-			return <RiErrorWarningFill />;
-		case "error":
-			return <RiErrorWarningFill />;
-		case "info":
-			return <RiInformationFill />;
-		default:
-			return <RiQuestionFill />;
-	}
 };
 
 export default Toast;

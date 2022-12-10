@@ -1,21 +1,17 @@
+import { ToastsWrapper } from "./Toast.styled";
+import { useSelector } from "react-redux";
+import { getToasts } from "./Toast.slice";
 import Toast from "./Toast";
-import { ToastWrapper } from "./Toast.styled";
 
-const Toasts = ({ toasts, deleteToast }) => {
+const Toasts = () => {
+	const toasts = useSelector(getToasts);
+
 	return (
-		<ToastWrapper>
-			{toasts?.map((toast) => {
-				return (
-					<Toast
-						key={toast._id}
-						status={toast.status}
-						title={toast.title}
-						message={toast.message}
-						deleteToast={() => deleteToast(toast._id)}
-					/>
-				);
-			})}
-		</ToastWrapper>
+		<ToastsWrapper>
+			{toasts.map((toast) => (
+				<Toast key={toast.id} toast={toast} />
+			))}
+		</ToastsWrapper>
 	);
 };
 

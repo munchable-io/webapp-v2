@@ -1,52 +1,65 @@
 import styled from "styled-components";
 
-export const ToastWrapper = styled.div`
+export const ToastsWrapper = styled.ul`
 	position: fixed;
-	padding: 1rem;
-	width: 500px;
-	bottom: 1rem;
+	bottom: 0;
 	left: 0;
+	padding: 2rem;
 	display: flex;
-	flex-direction: column-reverse;
+	flex-direction: column;
 	row-gap: 0.5rem;
-	max-height: 50%;
-	overflow-y: hidden;
+	max-width: 500px;
 
 	@media (max-width: 500px) {
-		width: 100%;
+		padding: 1rem;
 	}
 `;
 
-export const StyledToast = styled.div`
+export const StyledToast = styled.li`
+	background: rgba(255, 255, 255, 0.8);
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+	list-style: none;
 	padding: 0.5rem;
-	width: 100%;
 	border-radius: 8px;
-	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
-	color: black;
+`;
 
-	div.toastContainer {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		border-left: 4px solid
-			${(props) => (props.color ? props.color : "var(--primary-gray)")};
-		padding: 0.25rem 1rem;
+export const ToastBody = styled.div`
+	background: white;
+	border-left: 3px solid
+		${(props) => (props.color ? props.color : "var(--primary-gray)")};
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 
-		div.toastContent {
-			display: flex;
-			column-gap: 1rem;
-			align-items: center;
-
-			svg {
-				color: ${(props) =>
-					props.color ? props.color : "var(--primary-gray)"};
-			}
-		}
+	div.icon {
+		width: 1.2rem;
+		height: 1.2rem;
+		margin: 0 0.75rem;
 
 		svg {
-			width: 1.8rem;
-			height: 1.8rem;
-			color: var(--primary-light-gray);
+			color: ${(props) => (props.color ? props.color : "var(--primary-gray)")};
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	div.content {
+		max-width: 300px;
+		padding-right: 1rem;
+
+		p.second {
+			color: gray;
+		}
+	}
+
+	div.exitIcon {
+		width: 1rem;
+		height: 1rem;
+
+		svg {
+			width: 100%;
+			height: 100%;
+			color: gray;
 
 			&:hover {
 				cursor: pointer;
