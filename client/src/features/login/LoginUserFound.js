@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { handleLogin, setUser } from "../auth/auth.slice";
 import Button from "../ui/Button/Button";
@@ -63,9 +63,10 @@ const LoginUserFound = () => {
 		<StyledLoginModal>
 			<LoginSection>
 				<h3>Welcome Back!</h3>
-				<p>Please enter the code just sent to your phone</p>
+				<p>A message has been sent to {number}</p>
+				<p>Please enter the security code below</p>
 			</LoginSection>
-			<LoginSection>
+			<LoginSection align="left">
 				<Input
 					type="number"
 					label="One-Time Passcode"
@@ -73,6 +74,9 @@ const LoginUserFound = () => {
 					value={otp}
 					setValue={(e) => setOtp(e.target.value)}
 				/>
+				<Link onClick={() => dispatch(setScreen("phoneNumber"))}>
+					<p className="sm">Go Back</p>
+				</Link>
 			</LoginSection>
 			<LoginSection>
 				<Button onClick={handleSubmit} value="Login" width="100%" />

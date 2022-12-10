@@ -19,7 +19,7 @@ const CheckoutModal = forwardRef((props, ref) => {
 	const order = useSelector(getOrder);
 
 	const tip = useSelector(getTip);
-	const tax = 0.04225;
+	const tax = 0.0885;
 	const fee = 0.05;
 
 	// create items to display

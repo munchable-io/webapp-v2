@@ -15,5 +15,5 @@ export const LoginSection = styled.section`
 	display: flex;
 	flex-direction: column;
 	row-gap: 0.5rem;
-	text-align: center;
+	text-align: ${(props) => (props.align ? props.align : "center")};
 `;

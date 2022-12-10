@@ -4,6 +4,7 @@ import { store } from "../app/store";
 import { fetchUserByNumber, handleCreateAccount } from "../auth/auth.slice";
 import Button from "../ui/Button/Button";
 import Input from "../ui/Input/Input";
+import { Link } from "react-router-dom";
 import { getPhoneNumber, setScreen } from "./login.slice";
 import { LoginSection, StyledLoginModal } from "./Login.styled";
 
@@ -65,7 +66,7 @@ const LoginUserNotFound = () => {
 				<h3>Create Account</h3>
 				<p>Last step before your account is created!</p>
 			</LoginSection>
-			<LoginSection>
+			<LoginSection align="left">
 				<Input
 					type="text"
 					label="First Name"
@@ -87,6 +88,9 @@ const LoginUserNotFound = () => {
 					value={email}
 					setValue={(e) => setEmail(e.target.value)}
 				/>
+				<Link onClick={() => dispatch(setScreen("phoneNumber"))}>
+					<p className="sm">Go Back</p>
+				</Link>
 			</LoginSection>
 			<LoginSection>
 				<Button onClick={handleCreateAcc} value="Create Account" width="100%" />
