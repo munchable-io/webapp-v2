@@ -32,7 +32,7 @@ const App = () => {
 							<RequireAuth allowedRoles={["admin", "manager", "user"]} />
 						}
 					>
-						<Route path="checkout" element={<CheckoutPage />} />
+						<Route path="/checkout" element={<CheckoutPage />} />
 					</Route>
 				</Route>
 

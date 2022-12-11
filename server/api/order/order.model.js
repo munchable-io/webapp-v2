@@ -54,6 +54,26 @@ const orderSchema = mongoose.Schema(
 				],
 			},
 		],
+		subTotalAmount: {
+			type: Number,
+			required: true,
+		},
+		tipAmount: {
+			type: Number,
+			required: true,
+		},
+		taxAmount: {
+			type: Number,
+			required: true,
+		},
+		feeAmount: {
+			type: Number,
+			required: true,
+		},
+		totalAmount: {
+			type: Number,
+			required: true,
+		},
 	},
 	{
 		timestamps: true,

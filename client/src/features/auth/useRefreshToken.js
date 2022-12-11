@@ -1,10 +1,9 @@
 import axios from "../api/axios";
-import { useDispatch, useSelector } from "react-redux";
-import { getUser, setUser } from "./auth.slice";
+import { useDispatch } from "react-redux";
+import { setUser } from "./auth.slice";
 
 const useRefreshToken = () => {
 	const dispatch = useDispatch();
-	const auth = useSelector(getUser);
 
 	const refresh = async () => {
 		try {
@@ -13,14 +12,10 @@ const useRefreshToken = () => {
 				withCredentials: true,
 			});
 
-			// get access token
-			const accessToken = response.data.accessToken;
-			const role = response.data.role;
-
 			// give user updated access token
-			dispatch(setUser({ ...auth, accessToken, role }));
+			dispatch(setUser({ ...response.data }));
 
-			return accessToken;
+			return response.data.accessToken;
 		} catch (err) {
 			return err;
 		}

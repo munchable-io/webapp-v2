@@ -24,6 +24,11 @@ const orderValidation = (data) => {
 				),
 			})
 		),
+		subTotalAmount: Joi.number().required(),
+		tipAmount: Joi.number().required(),
+		taxAmount: Joi.number().required(),
+		feeAmount: Joi.number().required(),
+		totalAmount: Joi.number().required(),
 	});
 
 	return schema.validate(data);

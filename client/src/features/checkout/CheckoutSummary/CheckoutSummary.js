@@ -1,25 +1,26 @@
+import { useSelector } from "react-redux";
+import {
+	getFeeAmount,
+	getSubTotalAmount,
+	getTaxAmount,
+	getTipAmount,
+	getTotalAmount,
+} from "../../orders/orders.slice";
 import { SummaryRow, SummaryWrapper } from "./CheckoutSummary.styled";
 
-const CheckoutSummary = ({ order, tax, tip, fee }) => {
-	// calculate the cost of all items
-	const getOrderSubtotal = () => {
-		let total = 0;
-		for (let item of order) total += item?.qty * item?.price;
-		return total;
-	};
-
-	const subtotalAmount = getOrderSubtotal();
-	const taxAmount = tax * subtotalAmount;
-	const tipAmount = tip * subtotalAmount;
-	const feeAmount = fee * subtotalAmount;
-	const totalAmount = subtotalAmount + taxAmount + feeAmount;
+const CheckoutSummary = () => {
+	const subTotalAmount = useSelector(getSubTotalAmount);
+	const taxAmount = useSelector(getTaxAmount);
+	const tipAmount = useSelector(getTipAmount);
+	const feeAmount = useSelector(getFeeAmount);
+	const totalAmount = useSelector(getTotalAmount);
 
 	return (
 		<SummaryWrapper>
 			<h4>Order Summary</h4>
 			<SummaryRow>
 				<p className="description">Subtotal:</p>
-				<p className="content">${subtotalAmount.toFixed(2)}</p>
+				<p className="content">${subTotalAmount.toFixed(2)}</p>
 			</SummaryRow>
 			<SummaryRow>
 				<p className="description">Tax:</p>

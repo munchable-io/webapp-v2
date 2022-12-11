@@ -34,10 +34,10 @@ const getOrderByUser = async (req, res) => {
 	try {
 		const order = await Order.findOne({ userId: req.params.id });
 		if (!order) {
-			return res.status(400).json({ message: "User not found." });
+			return res.status(200).json(false);
 		}
 
-		return res.status(200).json(order);
+		return res.status(200).json(order._id);
 	} catch (err) {
 		return res.status(400).json({ message: err });
 	}

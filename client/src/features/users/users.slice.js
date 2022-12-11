@@ -25,6 +25,9 @@ const usersSlice = createSlice({
 		removeItemFromOrder(state, action) {
 			state.order = state.order.filter((item) => item.name !== action.payload);
 		},
+		setOrder(state, action) {
+			state.order = action.payload;
+		},
 		incrementQty(state, action) {
 			const index = state.order.findIndex(
 				(item) => item.name === action.payload.itemName
@@ -45,8 +48,13 @@ export const getOrderSize = (state) => state.users.order.length;
 export const getTip = (state) => state.users.tip;
 
 // actions
-export const { addItemToOrder, removeItemFromOrder, incrementQty, setTip } =
-	usersSlice.actions;
+export const {
+	addItemToOrder,
+	removeItemFromOrder,
+	setOrder,
+	incrementQty,
+	setTip,
+} = usersSlice.actions;
 
 // export reducer
 export default usersSlice.reducer;

@@ -50,8 +50,11 @@ const handleLogin = async (req, res) => {
 
 			// send accessToken as json
 			res.status(200).json({
+				userId: updatedUser._id,
 				firstName: updatedUser.firstName,
 				lastName: updatedUser.lastName,
+				phoneNumber: updatedUser.phoneNumber,
+				email: updatedUser.email,
 				role: updatedUser.role,
 				accessToken: accessToken,
 			});
@@ -98,7 +101,15 @@ const getAccessToken = async (req, res) => {
 				);
 
 				// send accessToken as json
-				res.status(200).json({ accessToken: accessToken, role: user.role });
+				res.status(200).json({
+					userId: user._id,
+					firstName: user.firstName,
+					lastName: user.lastName,
+					phoneNumber: user.phoneNumber,
+					email: user.email,
+					role: user.role,
+					accessToken: accessToken,
+				});
 			}
 		);
 	} catch (err) {

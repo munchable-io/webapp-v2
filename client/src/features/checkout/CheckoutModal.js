@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import { FiX } from "react-icons/fi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getOrder, getTip } from "../users/users.slice";
 import {
 	CheckoutBody,
@@ -12,25 +12,63 @@ import Button from "../ui/Button/Button";
 import CheckoutItem from "./CheckoutItem/CheckoutItem";
 import CheckoutSummary from "./CheckoutSummary/CheckoutSummary";
 import Tip from "./Tip/Tip";
+import {
+	setFeeAmount,
+	setSubTotalAmount,
+	setTaxAmount,
+	setTipAmount,
+	setTotalAmount,
+} from "../orders/orders.slice";
 import { useNavigate } from "react-router-dom";
 
 const CheckoutModal = forwardRef((props, ref) => {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
+
 	const order = useSelector(getOrder);
 
-	const tip = useSelector(getTip);
-	const tax = 0.0885;
-	const fee = 0.05;
+	const getOrderSubtotal = () => {
+		let total = 0;
+		for (let item of order) total += item?.qty * item?.price;
+		return total;
+	};
+
+	// get percentages for tax, tip, and fee
+	const taxPercent = 0.04225;
+	const tipPercent = useSelector(getTip);
+	const feePercent = 0.05;
+
+	// calculate totals
+	const subTotalAmount = getOrderSubtotal();
+	const taxAmount = subTotalAmount * taxPercent;
+	const tipAmount = subTotalAmount * tipPercent;
+	const feeAmount = subTotalAmount * feePercent;
+	const totalAmount = subTotalAmount + taxAmount + tipAmount + feeAmount;
+
+	// update totals
+	const updateTotals = async () => {
+		try {
+			// update state with totals
+			await dispatch(setSubTotalAmount(subTotalAmount));
+			await dispatch(setTaxAmount(taxAmount));
+			await dispatch(setTipAmount(tipAmount));
+			await dispatch(setFeeAmount(feeAmount));
+			await dispatch(setTotalAmount(totalAmount));
+		} catch (err) {
+			console.log(err);
+		}
+	};
+	updateTotals();
 
 	// create items to display
 	const items = order.map((item) => <CheckoutItem key={item.id} item={item} />);
 
-	const handleCheckout = () => {
+	const handleCheckout = async () => {
 		// close modal
 		props.modifyModal(false);
 
 		// navigate to checkout page
-		order.length > 0 && navigate("/checkout");
+		navigate("/checkout");
 	};
 
 	return (
@@ -47,13 +85,8 @@ const CheckoutModal = forwardRef((props, ref) => {
 				) : (
 					<CheckoutBody>
 						<CheckoutItems>{items}</CheckoutItems>
-
-						{/* tip selector */}
 						<Tip />
-
-						{/* give summary total */}
-						<CheckoutSummary order={order} tax={tax} tip={tip} fee={fee} />
-
+						<CheckoutSummary />
 						<Button
 							value="Proceed to Checkout"
 							width="100%"

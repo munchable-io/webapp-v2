@@ -97,7 +97,7 @@ const authSlice = createSlice({
 			})
 			.addCase(handleLogin.fulfilled, (state, action) => {
 				state.status = "succeeded";
-				state.accessToken = action.payload;
+				state.user = action.payload; // payload received from [base_url]/users/auth
 			})
 			.addCase(handleLogin.rejected, (state, action) => {
 				state.status = "failed";
