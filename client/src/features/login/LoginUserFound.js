@@ -6,6 +6,7 @@ import Button from "../ui/Button/Button";
 import Input from "../ui/Input/Input";
 import { getPhoneNumber, setScreen } from "./login.slice";
 import { LoginSection, StyledLoginModal } from "./Login.styled";
+import { addToast } from "../ui/Toast/Toast.slice";
 
 const LoginUserFound = () => {
 	const dispatch = useDispatch();
@@ -51,11 +52,24 @@ const LoginUserFound = () => {
 
 			// redirect to wherever user came from
 			navigate(from, { replace: true });
+
+			dispatch(
+				addToast({
+					status: "success",
+					header: "Success!",
+					body: "You have successfully logged in.",
+				})
+			);
 		} else {
 			// clear out fields
 			setOtp("");
-
-			alert("Yeet wrong password boi");
+			dispatch(
+				addToast({
+					status: "error",
+					header: "Login Unsuccessful:",
+					body: "Incorrect security code.",
+				})
+			);
 		}
 	};
 

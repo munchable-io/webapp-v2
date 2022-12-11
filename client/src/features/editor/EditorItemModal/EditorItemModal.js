@@ -22,6 +22,7 @@ import {
 	getSelectedItem,
 } from "../../item/item.slice";
 import { useLocation, useNavigate } from "react-router-dom";
+import { addToast } from "../../ui/Toast/Toast.slice";
 
 const EditorItemModal = forwardRef((props, ref) => {
 	const dispatch = useDispatch();
@@ -80,10 +81,24 @@ const EditorItemModal = forwardRef((props, ref) => {
 
 			store.dispatch(fetchItems());
 			props?.setIsComponentVisible(false);
+			dispatch(
+				addToast({
+					status: "success",
+					header: "Success!",
+					body: "Item has successfully been added.",
+				})
+			);
 		} catch (err) {
 			console.log(err);
 			// send to login on authentication failure
 			navigate("/login", { state: { from: location }, replace: true });
+			dispatch(
+				addToast({
+					status: "error",
+					header: "Error:",
+					body: "There was an issue adding your item.",
+				})
+			);
 		}
 	};
 
@@ -93,9 +108,24 @@ const EditorItemModal = forwardRef((props, ref) => {
 
 			store.dispatch(fetchItems());
 			props?.setIsComponentVisible(false);
+			dispatch(
+				addToast({
+					status: "success",
+					header: "Success!",
+					body: "Item has successfully been updated.",
+				})
+			);
 		} catch (err) {
-			alert("There was an error. Please check logs");
 			console.log(err);
+			// send to login on authentication failure
+			navigate("/login", { state: { from: location }, replace: true });
+			dispatch(
+				addToast({
+					status: "error",
+					header: "Error:",
+					body: "There was an issue updating your item.",
+				})
+			);
 		}
 	};
 
@@ -105,9 +135,24 @@ const EditorItemModal = forwardRef((props, ref) => {
 
 			store.dispatch(fetchItems());
 			props?.setIsComponentVisible(false);
+			dispatch(
+				addToast({
+					status: "success",
+					header: "Success!",
+					body: "Item has successfully been deleted.",
+				})
+			);
 		} catch (err) {
-			alert("There was an error. Please check logs");
 			console.log(err);
+			// send to login on authentication failure
+			navigate("/login", { state: { from: location }, replace: true });
+			dispatch(
+				addToast({
+					status: "error",
+					header: "Error:",
+					body: "There was an issue deleting your item.",
+				})
+			);
 		}
 	};
 

@@ -7,6 +7,7 @@ import Input from "../ui/Input/Input";
 import { Link } from "react-router-dom";
 import { getPhoneNumber, setScreen } from "./login.slice";
 import { LoginSection, StyledLoginModal } from "./Login.styled";
+import { addToast } from "../ui/Toast/Toast.slice";
 
 const LoginUserNotFound = () => {
 	const dispatch = useDispatch();
@@ -33,7 +34,13 @@ const LoginUserNotFound = () => {
 				dispatch(setScreen("userFound"));
 			} else {
 				// idk how this could be reached
-				alert("Sorry, you cannot be logged in at this time.");
+				dispatch(
+					addToast({
+						status: "error",
+						header: "Error:",
+						body: "Unable to log in at this time.",
+					})
+				);
 				console.log(result.payload);
 
 				// clear input fields

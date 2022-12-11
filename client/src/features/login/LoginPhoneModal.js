@@ -6,6 +6,7 @@ import Button from "../ui/Button/Button";
 import Input from "../ui/Input/Input";
 import { setPhoneNumber, setScreen } from "./login.slice";
 import { LoginSection, StyledLoginModal } from "./Login.styled";
+import { addToast } from "../ui/Toast/Toast.slice";
 
 const LoginPhoneModal = () => {
 	const dispatch = useDispatch();
@@ -34,7 +35,13 @@ const LoginPhoneModal = () => {
 			// clear input fields
 			setNumber("");
 		} else {
-			alert("Error: please input a 10-digit phone number (no country code)");
+			dispatch(
+				addToast({
+					status: "warning",
+					header: "Error: phone number:",
+					body: "Please input a 10-digit number (no country code).",
+				})
+			);
 		}
 	};
 

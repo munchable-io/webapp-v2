@@ -4,13 +4,15 @@ import { NavItems, StyledNav } from "./Nav.styled";
 import NavItem from "./NavItem";
 import { useNavigate } from "react-router-dom";
 import useLogout from "../../auth/useLogout";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../auth/auth.slice";
 import useRefreshToken from "../../auth/useRefreshToken";
 import { useEffect } from "react";
+import { addToast } from "../Toast/Toast.slice";
 import Loading from "../Loading/Loading";
 
 const Nav = forwardRef(({ modifyModal }, ref) => {
+	const dispatch = useDispatch();
 	const refresh = useRefreshToken();
 	const auth = useSelector(getUser);
 	const navigate = useNavigate();
@@ -43,6 +45,13 @@ const Nav = forwardRef(({ modifyModal }, ref) => {
 		try {
 			await logout();
 			navigate("/");
+			dispatch(
+				addToast({
+					status: "info",
+					header: "Account Update:",
+					body: "You have just been logged out.",
+				})
+			);
 		} catch (err) {
 			console.error(err);
 		}

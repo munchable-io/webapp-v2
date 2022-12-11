@@ -15,6 +15,7 @@ import Textbox from "../../ui/Textbox/Textbox";
 import Button from "../../ui/Button/Button";
 import Counter from "../../ui/Counter/Counter";
 import { addItemToOrder } from "../../users/users.slice";
+import { addToast } from "../../ui/Toast/Toast.slice";
 
 const ItemModal = forwardRef((props, ref) => {
 	const dispatch = useDispatch();
@@ -95,12 +96,25 @@ const ItemModal = forwardRef((props, ref) => {
 			setQty(1);
 			setOptions([]);
 
+			dispatch(
+				addToast({
+					status: "success",
+					header: "Success!",
+					body: `${customizedItem.name} added to cart.`,
+				})
+			);
+
 			props.modifyModal(false);
 		} else {
-			// TODO: add toast notifications
-			alert(
-				"Please select choices for the following options: \n" +
-					missingRequiredFields.map((field) => field)
+			dispatch(
+				addToast({
+					status: "warning",
+					header: "Whoops! Looks like you missed some fields:",
+					body: missingRequiredFields.map(
+						(field, index) =>
+							field + (index < missingRequiredFields.length - 1 ? ", " : "")
+					),
+				})
 			);
 		}
 	};
