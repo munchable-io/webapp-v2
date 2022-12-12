@@ -40,6 +40,6 @@ router.get("/", async (req, res) => {
 });
 
 // tax endpoints
-router.use("/taxRates", require("./taxRates"));
+router.use("/taxRates", require("./taxRate"));
 
 module.exports = router;
