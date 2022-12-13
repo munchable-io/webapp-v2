@@ -88,7 +88,7 @@ const CheckoutModal = forwardRef((props, ref) => {
 						<Tip />
 						<CheckoutSummary />
 						<Button
-							value="Proceed to Checkout"
+							value="Proceed to Payment"
 							width="100%"
 							onClick={handleCheckout}
 						/>
