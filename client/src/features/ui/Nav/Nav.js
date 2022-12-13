@@ -1,4 +1,11 @@
-import { FiEdit, FiFileText, FiLogIn, FiLogOut, FiX } from "react-icons/fi";
+import {
+	FiEdit,
+	FiFileText,
+	FiList,
+	FiLogIn,
+	FiLogOut,
+	FiX,
+} from "react-icons/fi";
 import { forwardRef, useState } from "react";
 import { NavItems, StyledNav } from "./Nav.styled";
 import NavItem from "./NavItem";
@@ -69,23 +76,29 @@ const Nav = forwardRef(({ modifyModal }, ref) => {
 							<FiFileText />
 							<p className="sm">Menu</p>
 						</NavItem>
-						{["admin", "manager"].includes(auth?.role) && (
-							<NavItem to="/editor" modifyModal={modifyModal}>
-								<FiEdit />
-								<p className="sm">Menu Editor</p>
-							</NavItem>
-						)}
 						{!auth?.accessToken && (
 							<NavItem to="/login" modifyModal={modifyModal}>
 								<FiLogIn />
 								<p className="sm">Register / Login</p>
 							</NavItem>
 						)}
-						{auth?.accessToken && (
-							<NavItem onClick={handleLogout} modifyModal={modifyModal}>
-								<FiLogOut />
-								<p className="sm">Logout</p>
+						{["admin", "manager"].includes(auth?.role) && (
+							<NavItem to="/editor" modifyModal={modifyModal}>
+								<FiEdit />
+								<p className="sm">Menu Editor</p>
 							</NavItem>
+						)}
+						{auth?.accessToken && (
+							<>
+								<NavItem to="/orders" modifyModal={modifyModal}>
+									<FiList />
+									<p className="sm">Orders</p>
+								</NavItem>
+								<NavItem onClick={handleLogout} modifyModal={modifyModal}>
+									<FiLogOut />
+									<p className="sm">Logout</p>
+								</NavItem>
+							</>
 						)}
 					</NavItems>
 				)}
