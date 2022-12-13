@@ -1,1 +1,1 @@
-module.exports = require("./tax.route");
+module.exports = require("./taxRate.route");

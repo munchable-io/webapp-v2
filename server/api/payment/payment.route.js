@@ -16,6 +16,7 @@ router.get("/", async (req, res) => {
 						unit_amount: 999,
 					},
 					quantity: 2,
+					tax_rates: ["txr_1ME040DHS9nkPMw6773fn4JZ"],
 				},
 				{
 					price_data: {
@@ -26,8 +27,12 @@ router.get("/", async (req, res) => {
 						unit_amount: 1299,
 					},
 					quantity: 1,
+					tax_rates: ["txr_1ME040DHS9nkPMw6773fn4JZ"],
 				},
 			],
+			tax_id_collection: {
+				enabled: true,
+			},
 			mode: "payment",
 			cancel_url: "https://example.com/cancel",
 			success_url: "https://example.com/success",
