@@ -44,6 +44,7 @@ export const createOrder = createAsyncThunk(
 			const response = await axios.post("/orders", order);
 			return response.data;
 		} catch (err) {
+			console.log(err);
 			return err.message;
 		}
 	}

@@ -19,10 +19,11 @@ import {
 	setTipAmount,
 	setTotalAmount,
 } from "../orders/orders.slice";
-import axios from "../api/axios";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutModal = forwardRef((props, ref) => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const order = useSelector(getOrder);
 
@@ -63,34 +64,10 @@ const CheckoutModal = forwardRef((props, ref) => {
 	const items = order.map((item) => <CheckoutItem key={item.id} item={item} />);
 
 	const handleCheckout = async () => {
-		const payload = {
-			cancelUrl: "http://localhost:3000",
-			successUrl: "http://localhost:3000/checkout",
-			lineItems: order.map((item) => ({
-				quantity: item.qty,
-				tax_rates: ["txr_1ME040DHS9nkPMw6773fn4JZ"],
-				price_data: {
-					currency: "usd",
-					unit_amount: Math.round(100 * item.price),
-					product_data: {
-						name: item.name,
-					},
-				},
-			})),
-		};
-
-		try {
-			const response = await axios.post("/payment/pay", payload);
-			const url = await response?.data?.url;
-			window.location.href = url;
-		} catch (err) {
-			console.log(err.message);
-		}
 		// close modal
-		//props.modifyModal(false);
-
+		props.modifyModal(false);
 		// navigate to checkout page
-		//navigate("/checkout");
+		navigate("/checkout");
 	};
 
 	return (

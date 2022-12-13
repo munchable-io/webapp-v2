@@ -7,6 +7,7 @@ import EditorPage from "./pages/EditorPage";
 import LoginPage from "./pages/LoginPage";
 import MenuPage from "./pages/MenuPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import OrdersPage from "./pages/OrdersPage";
 
 const App = () => {
 	return (
@@ -33,6 +34,7 @@ const App = () => {
 						}
 					>
 						<Route path="/checkout" element={<CheckoutPage />} />
+						<Route path="/orders" element={<OrdersPage />} />
 					</Route>
 				</Route>
 
