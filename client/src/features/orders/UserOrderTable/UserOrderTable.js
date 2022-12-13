@@ -1,12 +1,23 @@
 import { useSelector } from "react-redux";
 import { getOrders } from "../orders.slice";
 import { OrderTable, OrderTableWrapper } from "../orders.styled";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import OrderStatus from "../OrderStatus/OrderStatus";
 import UserOrderInputs from "./UserOrderInputs/UserOrderInputs";
 
 const UserOrderTable = () => {
 	const orders = useSelector(getOrders);
+	const navigate = useNavigate();
+
+	const reorder = (order) => {
+		// navigate to menu
+		navigate("", { replace: false });
+		// add menu items to cart
+
+		// open modal
+
+		console.log(order._id);
+	};
 
 	return (
 		<OrderTableWrapper>
@@ -22,18 +33,18 @@ const UserOrderTable = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{orders.map((item) => (
-						<tr key={item?._id}>
+					{orders.map((order) => (
+						<tr key={order?._id}>
 							<td>Lucky Dynasty</td>
 							<td>
-								<OrderStatus status={item?.status} />
+								<OrderStatus status={order?.status} />
 							</td>
 							<td className="td-light">
-								{new Date(item?.createdAt).toLocaleString()}
+								{new Date(order?.createdAt).toLocaleString()}
 							</td>
-							<td>${item?.totalAmount.toFixed(2)}</td>
+							<td>${order?.totalAmount.toFixed(2)}</td>
 							<td className="flex-row">
-								<Link>Order Again</Link>
+								<Link onClick={() => reorder(order)}>Order Again</Link>
 								<Link>View Order Details</Link>
 							</td>
 						</tr>

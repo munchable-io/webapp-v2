@@ -53,7 +53,7 @@ const CheckoutPage = () => {
 		// format order data for stripe payment payload
 		const payload = {
 			cancelUrl: "http://localhost:3000", // TODO: update
-			successUrl: "http://localhost:3000", // TODO: update
+			successUrl: "http://localhost:3000/orders", // TODO: update
 			lineItems: order.map((item) => ({
 				quantity: item.qty,
 				tax_rates: ["txr_1ME040DHS9nkPMw6773fn4JZ"],
