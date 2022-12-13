@@ -3,6 +3,7 @@ import axios from "../api/axios";
 
 const initialState = {
 	order: [],
+	orders: [],
 	status: "idle", // idle | loading | succeeded | failed
 	error: null,
 	subTotalAmount: 0,
@@ -13,18 +14,6 @@ const initialState = {
 };
 
 // async thunks
-export const fetchOrder = createAsyncThunk(
-	"orders/fetchOrder",
-	async (userId) => {
-		try {
-			const response = await axios.get(`/orders/user/${userId}`);
-			return response.data;
-		} catch (err) {
-			return err.message;
-		}
-	}
-);
-
 export const updateOrder = createAsyncThunk(
 	"orders/updateOrder",
 	async (data) => {
@@ -42,6 +31,18 @@ export const createOrder = createAsyncThunk(
 	async (order) => {
 		try {
 			const response = await axios.post("/orders", order);
+			return response.data;
+		} catch (err) {
+			return err.message;
+		}
+	}
+);
+
+export const getOrdersByUser = createAsyncThunk(
+	"orders/orders/user",
+	async (id) => {
+		try {
+			const response = await axios.get(`orders/user/${id}`);
 			return response.data;
 		} catch (err) {
 			console.log(err);
@@ -73,17 +74,6 @@ const ordersSlice = createSlice({
 	},
 	extraReducers(builder) {
 		builder
-			.addCase(fetchOrder.pending, (state, action) => {
-				state.status = "loading";
-			})
-			.addCase(fetchOrder.fulfilled, (state, action) => {
-				state.status = "succeeded";
-				state.order = action.payload; // order is returned from [baseUrl]/orders/user/:id
-			})
-			.addCase(fetchOrder.rejected, (state, action) => {
-				state.status = "failed";
-				state.error = action.error.message;
-			})
 			.addCase(updateOrder.pending, (state, action) => {
 				state.status = "loading";
 			})
@@ -91,6 +81,16 @@ const ordersSlice = createSlice({
 				state.status = "succeeded";
 			})
 			.addCase(updateOrder.rejected, (state, action) => {
+				state.status = "failed";
+			})
+			.addCase(getOrdersByUser.pending, (state, action) => {
+				state.status = "loading";
+			})
+			.addCase(getOrdersByUser.fulfilled, (state, action) => {
+				state.status = "succeeded";
+				state.orders = action.payload; // orders are returned from [baseUrl]/orders/user/:id
+			})
+			.addCase(getOrdersByUser.rejected, (state, action) => {
 				state.status = "failed";
 			});
 	},
@@ -103,6 +103,7 @@ export const getTaxAmount = (state) => state.orders.taxAmount;
 export const getTipAmount = (state) => state.orders.tipAmount;
 export const getFeeAmount = (state) => state.orders.feeAmount;
 export const getTotalAmount = (state) => state.orders.totalAmount;
+export const getOrders = (state) => state.orders.orders;
 
 // actions
 export const {
