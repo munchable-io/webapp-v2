@@ -32,12 +32,12 @@ const getOrderByRestaurant = async (req, res) => {};
 // get order by user id
 const getOrderByUser = async (req, res) => {
 	try {
-		const order = await Order.findOne({ userId: req.params.id });
-		if (!order) {
-			return res.status(200).json(false);
+		const orders = await Order.find({ userId: req.params.id });
+		if (!orders) {
+			return res.status(200).json([]);
 		}
 
-		return res.status(200).json(order._id);
+		return res.status(200).json(orders);
 	} catch (err) {
 		return res.status(400).json({ message: err });
 	}
