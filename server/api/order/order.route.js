@@ -6,6 +6,7 @@ const {
 	createOrder,
 	updateOrder,
 	deleteOrder,
+	getFilteredOrders,
 } = require("./order.controller");
 
 /*
@@ -14,6 +15,8 @@ const {
 @access Protected --> [admin, manager]
 */
 router.get("/", getOrders);
+
+router.get("/test", getFilteredOrders);
 
 /*
 @desc   Get order by id

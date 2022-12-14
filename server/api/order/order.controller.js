@@ -1,11 +1,25 @@
 const Order = require("./order.model");
 const orderValidation = require("./order.validate");
 
-// get all orders
-const getOrders = async (req, res) => {
-	const limit = req.params.limit || 100;
+const getFilteredOrders = async (req, res) => {
+	const limit = req.query.limit <= 100 ? req.query.limit : 100;
+
 	try {
 		const orders = await Order.find().limit(limit);
+		return res.status(200).json({
+			count: orders.length,
+			limitPerPage: limit,
+			orders,
+		});
+	} catch (err) {
+		return res.status(400).json({ message: err.message });
+	}
+};
+
+// get all orders
+const getOrders = async (req, res) => {
+	try {
+		const orders = await Order.find();
 		return res.status(200).json(orders);
 	} catch (err) {
 		return res.status(400).json({ message: err });
@@ -98,6 +112,7 @@ const deleteOrder = async (req, res) => {
 };
 
 module.exports = {
+	getFilteredOrders,
 	getOrders,
 	getOrder,
 	getOrderByRestaurant,
