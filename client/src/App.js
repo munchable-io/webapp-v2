@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import MenuPage from "./pages/MenuPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrdersPage from "./pages/OrdersPage";
+import AccountPage from "./pages/AccountPage";
 
 const App = () => {
 	return (
@@ -27,14 +28,11 @@ const App = () => {
 						<Route path="editor" element={<EditorPage />} />
 					</Route>
 
-					{/* admin, manager, user routes */}
-					<Route
-						element={
-							<RequireAuth allowedRoles={["admin", "manager", "user"]} />
-						}
-					>
+					{/* manager, user routes */}
+					<Route element={<RequireAuth allowedRoles={["manager", "user"]} />}>
 						<Route path="/checkout" element={<CheckoutPage />} />
 						<Route path="/orders" element={<OrdersPage />} />
+						<Route path="/account" element={<AccountPage />} />
 					</Route>
 				</Route>
 

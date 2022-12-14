@@ -4,6 +4,7 @@ import {
 	FiList,
 	FiLogIn,
 	FiLogOut,
+	FiUser,
 	FiX,
 } from "react-icons/fi";
 import { forwardRef, useState } from "react";
@@ -88,17 +89,23 @@ const Nav = forwardRef(({ modifyModal }, ref) => {
 								<p className="sm">Menu Editor</p>
 							</NavItem>
 						)}
-						{auth?.accessToken && (
+						{["manager", "user"].includes(auth?.role) && (
 							<>
 								<NavItem to="/orders" modifyModal={modifyModal}>
 									<FiList />
 									<p className="sm">Orders</p>
 								</NavItem>
-								<NavItem onClick={handleLogout} modifyModal={modifyModal}>
-									<FiLogOut />
-									<p className="sm">Logout</p>
+								<NavItem to="/account" modifyModal={modifyModal}>
+									<FiUser />
+									<p className="sm">My Account</p>
 								</NavItem>
 							</>
+						)}
+						{auth?.accessToken && (
+							<NavItem onClick={handleLogout} modifyModal={modifyModal}>
+								<FiLogOut />
+								<p className="sm">Logout</p>
+							</NavItem>
 						)}
 					</NavItems>
 				)}
