@@ -2,15 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../api/axios";
 
 const initialState = {
-	order: [],
 	orders: [],
 	status: "idle", // idle | loading | succeeded | failed
 	error: null,
-	subTotalAmount: 0,
-	taxAmount: 0,
-	tipAmount: 0,
-	feeAmount: 0,
-	totalAmount: 0,
 };
 
 // async thunks
@@ -96,23 +90,10 @@ const ordersSlice = createSlice({
 	},
 });
 
-// functions
-export const getOrder = (state) => state.orders.order;
-export const getSubTotalAmount = (state) => state.orders.subTotalAmount;
-export const getTaxAmount = (state) => state.orders.taxAmount;
-export const getTipAmount = (state) => state.orders.tipAmount;
-export const getFeeAmount = (state) => state.orders.feeAmount;
-export const getTotalAmount = (state) => state.orders.totalAmount;
+// function
 export const getOrders = (state) => state.orders.orders;
 
 // actions
-export const {
-	setSubTotalAmount,
-	setTaxAmount,
-	setTipAmount,
-	setFeeAmount,
-	setTotalAmount,
-} = ordersSlice.actions;
 
 // export reducer
 export default ordersSlice.reducer;

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 	order: [],
+	cart: [],
 	tip: 0.18,
 };
 
@@ -9,51 +10,54 @@ const usersSlice = createSlice({
 	name: "users",
 	initialState,
 	reducers: {
-		addItemToOrder(state, action) {
-			const item = action.payload;
-			if (
-				state.order.filter((target) => target.name === item.name).length > 0
-			) {
-				const itemIndex = state.order.findIndex(
-					(target) => target.name === item.name
-				);
-				state.order[itemIndex] = item;
-			} else {
-				state.order.push(item);
-			}
-		},
-		removeItemFromOrder(state, action) {
-			state.order = state.order.filter((item) => item.name !== action.payload);
-		},
-		setOrder(state, action) {
-			state.order = action.payload;
-		},
-		incrementQty(state, action) {
-			const index = state.order.findIndex(
-				(item) => item.name === action.payload.itemName
-			);
-			if (state.order[index].qty + action.payload.amt > 0) {
-				state.order[index].qty += action.payload.amt;
-			}
-		},
 		setTip(state, action) {
 			state.tip = action.payload;
+		},
+		addItemToLocalCart(state, action) {
+			const item = action.payload;
+			let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+			cart.push(item);
+
+			state.cart = cart;
+			localStorage.setItem("cart", JSON.stringify(cart));
+		},
+		incrementQty(state, action) {
+			const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+			const index = cart.findIndex((item) => item.id === action.payload.id);
+			if (cart[index].qty + action.payload.amt > 0) {
+				cart[index].qty += action.payload.amt;
+			}
+
+			state.cart = cart;
+			localStorage.setItem("cart", JSON.stringify(cart));
+		},
+		deleteFromLocalCart(state, action) {
+			const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+			const updatedCart = cart.filter((item) => item.id !== action.payload);
+
+			state.cart = updatedCart;
+			localStorage.setItem("cart", JSON.stringify(updatedCart));
+		},
+		updateLocalCart(state, action) {
+			state.cart = JSON.parse(localStorage.getItem("cart") || "[]");
 		},
 	},
 });
 
 // functions
 export const getOrder = (state) => state.users.order;
-export const getOrderSize = (state) => state.users.order.length;
 export const getTip = (state) => state.users.tip;
+
+export const getLocalCart = (state) => state.users.cart;
 
 // actions
 export const {
-	addItemToOrder,
-	removeItemFromOrder,
-	setOrder,
-	incrementQty,
 	setTip,
+	initLocalCart,
+	addItemToLocalCart,
+	incrementQty,
+	deleteFromLocalCart,
+	updateLocalCart,
 } = usersSlice.actions;
 
 // export reducer

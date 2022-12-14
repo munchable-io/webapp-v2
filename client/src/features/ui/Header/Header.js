@@ -1,14 +1,20 @@
 import { FiMenu, FiShoppingCart } from "react-icons/fi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CheckoutModal from "../../checkout/CheckoutModal";
 import Nav from "../Nav/Nav";
-import { getOrderSize } from "../../users/users.slice";
 import useComponentVisible from "../hooks/useComponentVisible";
 import { HeaderCart, StyledHeader } from "./Header.styled";
 import { Link } from "react-router-dom";
+import { getLocalCart, updateLocalCart } from "../../users/users.slice";
+import { useEffect } from "react";
 
 const Header = () => {
-	const hasOrder = useSelector(getOrderSize) > 0;
+	const dispatch = useDispatch();
+	const hasOrder = useSelector(getLocalCart).length > 0;
+
+	useEffect(() => {
+		dispatch(updateLocalCart());
+	}, []); // eslint-disable-line
 
 	const {
 		ref: navModalRef,

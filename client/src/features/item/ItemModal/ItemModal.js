@@ -14,7 +14,7 @@ import MultiOption from "../Options/MultiOption";
 import Textbox from "../../ui/Textbox/Textbox";
 import Button from "../../ui/Button/Button";
 import Counter from "../../ui/Counter/Counter";
-import { addItemToOrder } from "../../users/users.slice";
+import { addItemToLocalCart } from "../../users/users.slice";
 import { addToast } from "../../ui/Toast/Toast.slice";
 
 const ItemModal = forwardRef((props, ref) => {
@@ -90,7 +90,7 @@ const ItemModal = forwardRef((props, ref) => {
 				options: customizedOptions,
 				message: userMessage || "N/A",
 			};
-			dispatch(addItemToOrder(customizedItem));
+			dispatch(addItemToLocalCart(customizedItem));
 
 			setUserMessage("");
 			setQty(1);

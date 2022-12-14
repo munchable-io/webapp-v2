@@ -3,7 +3,8 @@ import { CheckoutItemSection, StyledCheckoutItem } from "./Checkout.styled";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { incrementQty, removeItemFromOrder } from "../../users/users.slice";
+import { incrementQty } from "../../users/users.slice";
+import { deleteFromLocalCart } from "../../users/users.slice";
 import Counter from "../../ui/Counter/Counter";
 
 const CheckoutItem = ({ item }) => {
@@ -25,6 +26,10 @@ const CheckoutItem = ({ item }) => {
 		);
 	});
 
+	const handleDelete = (id) => {
+		dispatch(deleteFromLocalCart(id));
+	};
+
 	return (
 		<StyledCheckoutItem>
 			<CheckoutItemSection>
@@ -35,14 +40,10 @@ const CheckoutItem = ({ item }) => {
 				<div className="row">
 					<Counter
 						value={item?.qty}
-						increment={() =>
-							dispatch(incrementQty({ itemName: item?.name, amt: 1 }))
-						}
-						decrement={() =>
-							dispatch(incrementQty({ itemName: item?.name, amt: -1 }))
-						}
+						increment={() => dispatch(incrementQty({ id: item?.id, amt: 1 }))}
+						decrement={() => dispatch(incrementQty({ id: item?.id, amt: -1 }))}
 					/>
-					<FiTrash2 onClick={() => dispatch(removeItemFromOrder(item?.name))} />
+					<FiTrash2 onClick={() => handleDelete(item?.id)} />
 				</div>
 				<Link onClick={() => setShowDetails(!showDetails)} className="sm">
 					{showDetails ? "hide " : "show "}details
