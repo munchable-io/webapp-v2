@@ -1,15 +1,18 @@
-import { Outlet } from "react-router-dom";
-import Header from "../ui/Header/Header";
-import Toasts from "../ui/Toast/Toasts";
+// import { Outlet } from "react-router-dom";
+// import Header from "../ui/Header/Header";
+// import Toasts from "../ui/Toast/Toasts";
+// import Header from "../Header";
+import Nav from "../Nav";
 
 const Layout = () => {
 	return (
 		<>
-			<Header />
+			<Nav />
+			{/* <Header />
 			<main>
 				<Outlet />
 			</main>
-			<Toasts />
+			<Toasts /> */}
 		</>
 	);
 };
