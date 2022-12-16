@@ -7,42 +7,96 @@ import {
 	FiUser,
 } from "react-icons/fi";
 import { NavBody, NavFooter, NavList, StyledNav } from "./Nav.styled";
-import NavItem from "./NavItem";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../auth/auth.slice";
+import { addToast } from "../ui/Toast/Toast.slice";
+import useLogout from "../auth/useLogout";
 
 const Nav = () => {
+	const user = useSelector(getUser);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const logout = useLogout();
+
+	const activeStyle = {
+		backgroundColor: "rgba(255, 255, 255, 0.25)",
+	};
+
+	const handleLogout = async () => {
+		try {
+			await logout();
+			navigate("/");
+			dispatch(
+				addToast({
+					status: "info",
+					header: "Account Update:",
+					body: "You have just been logged out.",
+				})
+			);
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
 	return (
 		<StyledNav>
 			<NavBody>
-				<h4>Welcome, Kimmy!</h4>
+				{user?.firstName ? <h4>Hi, {user?.firstName}!</h4> : <h4>Welcome!</h4>}
 				<NavList>
-					<NavItem>
+					<NavLink
+						to="/"
+						style={({ isActive }) => (isActive ? activeStyle : undefined)}
+					>
 						<FiFileText />
 						<p>Menu</p>
-					</NavItem>
-					<NavItem>
-						<FiEdit />
-						<p>Menu Editor</p>
-					</NavItem>
-					<NavItem>
-						<FiList />
-						<p>Orders</p>
-					</NavItem>
-					<NavItem>
-						<FiUser />
-						<p>Account Settings</p>
-					</NavItem>
+					</NavLink>
+					{["manager"].includes(user?.role) && (
+						<NavLink
+							to="/editor"
+							style={({ isActive }) => (isActive ? activeStyle : undefined)}
+						>
+							<FiEdit />
+							<p>Menu Editor</p>
+						</NavLink>
+					)}
+					{["user", "manager"].includes(user?.role) && (
+						<>
+							<NavLink
+								to="/orders"
+								style={({ isActive }) => (isActive ? activeStyle : undefined)}
+							>
+								<FiList />
+								<p>Orders</p>
+							</NavLink>
+							<NavLink
+								to="/account"
+								style={({ isActive }) => (isActive ? activeStyle : undefined)}
+							>
+								<FiUser />
+								<p>My Account</p>
+							</NavLink>
+						</>
+					)}
 				</NavList>
 			</NavBody>
 			<NavFooter>
 				<NavList>
-					<NavItem>
-						<FiLogIn />
-						<p>Sign In</p>
-					</NavItem>
-					<NavItem>
-						<FiLogOut />
-						<p>Logout</p>
-					</NavItem>
+					{!user?.accessToken && (
+						<NavLink
+							to="/login"
+							style={({ isActive }) => (isActive ? activeStyle : undefined)}
+						>
+							<FiLogIn />
+							<p>Sign In</p>
+						</NavLink>
+					)}
+					{user?.accessToken && (
+						<NavLink onClick={handleLogout}>
+							<FiLogOut />
+							<p>Log Out</p>
+						</NavLink>
+					)}
 				</NavList>
 			</NavFooter>
 		</StyledNav>

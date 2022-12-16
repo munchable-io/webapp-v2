@@ -14,13 +14,13 @@ const App = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<Layout />}>
-				{/* public routes  */}
-				<Route index element={<MenuPage />} />
-				<Route path="unauthorized" element={<NoAuthPage />} />
-				<Route path="login" element={<LoginPage />} />
-
 				{/* protected routes  */}
 				<Route element={<PersistLogin />}>
+					{/* public routes  */}
+					<Route index element={<MenuPage />} />
+					<Route path="unauthorized" element={<NoAuthPage />} />
+					<Route path="login" element={<LoginPage />} />
+
 					{/* admin only routes */}
 
 					{/* admin, manager routes */}
