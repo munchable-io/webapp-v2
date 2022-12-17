@@ -22,6 +22,7 @@ app.use("/users", require("./api/user"));
 app.use("/items", require("./api/item"));
 app.use("/orders", require("./api/order"));
 app.use("/payment", require("./api/payment"));
+app.use("/restaurants", require("./api/restaurant"));
 
 // connect to server
 app.listen(PORT, (err) => {
