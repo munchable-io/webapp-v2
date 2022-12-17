@@ -9,6 +9,7 @@ import MenuPage from "./pages/MenuPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrdersPage from "./pages/OrdersPage";
 import AccountPage from "./pages/AccountPage";
+import RestaurantLoginPage from "./pages/RestaurantLoginPage";
 
 const App = () => {
 	return (
@@ -23,9 +24,10 @@ const App = () => {
 
 					{/* admin only routes */}
 
-					{/* admin, manager routes */}
-					<Route element={<RequireAuth allowedRoles={["manager", "admin"]} />}>
+					{/* manager routes */}
+					<Route element={<RequireAuth allowedRoles={["manager"]} />}>
 						<Route path="editor" element={<EditorPage />} />
+						<Route path="restaurantLogin" element={<RestaurantLoginPage />} />
 					</Route>
 
 					{/* manager, user routes */}
