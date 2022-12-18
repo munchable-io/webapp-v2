@@ -8,6 +8,7 @@ export const StyledCheckout = styled.section`
 	height: 100%;
 	background: white;
 	overflow-y: scroll;
+	color: black;
 	-ms-overflow-style: none; /* Internet Explorer 10+ */
 	scrollbar-width: none; /* Firefox */
 
@@ -34,6 +35,7 @@ export const CheckoutHeader = styled.header`
 	svg {
 		width: 1.6rem;
 		height: 1.6rem;
+		color: black;
 
 		&:hover {
 			cursor: pointer;
