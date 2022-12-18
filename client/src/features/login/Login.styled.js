@@ -9,6 +9,7 @@ export const StyledLoginModal = styled.main`
 	flex-direction: column;
 	row-gap: 1.5rem;
 	border-radius: 16px;
+	background: white;
 `;
 
 export const LoginSection = styled.section`
@@ -16,4 +17,5 @@ export const LoginSection = styled.section`
 	flex-direction: column;
 	row-gap: 0.5rem;
 	text-align: ${(props) => (props.align ? props.align : "center")};
+	background: white;
 `;

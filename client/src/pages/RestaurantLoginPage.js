@@ -32,7 +32,7 @@ const RestaurantLoginPage = () => {
 				const response = await axios.post("/restaurants", restaurant);
 
 				// set user's restaurant id to result
-				await dispatch(
+				dispatch(
 					updateUser({
 						id: user?.userId,
 						payload: {
