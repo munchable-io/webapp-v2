@@ -16,7 +16,13 @@ const usersSlice = createSlice({
 		addItemToLocalCart(state, action) {
 			const item = action.payload;
 			let cart = JSON.parse(localStorage.getItem("cart") || "[]");
-			cart.push(item);
+
+			const index = cart.findIndex((target) => target.id === item.id);
+			if (index === -1) {
+				cart.push(item);
+			} else {
+				cart[index] = item;
+			}
 
 			state.cart = cart;
 			localStorage.setItem("cart", JSON.stringify(cart));

@@ -48,7 +48,7 @@ const Nav = forwardRef((props, ref) => {
 		<StyledNav ref={ref} open={navOpen}>
 			<NavHeader>
 				<FiX onClick={() => dispatch(setIsNavOpen(false))} />
-				<h3>Welcome!</h3>
+				<h4>Welcome!</h4>
 			</NavHeader>
 			<NavBody>
 				<NavLink
