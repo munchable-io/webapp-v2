@@ -8,8 +8,6 @@ export const StyledCheckout = styled.section`
 	height: 100%;
 	background: var(--primary-dark-gray);
 	color: white;
-	border-top-left-radius: 8px;
-	border-bottom-left-radius: 8px;
 	transition: all 0.15s ease-in-out;
 	display: flex;
 	flex-direction: column;

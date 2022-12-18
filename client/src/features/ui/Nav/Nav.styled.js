@@ -8,8 +8,6 @@ export const StyledNav = styled.nav`
 	height: 100%;
 	background: var(--primary-dark-gray);
 	color: white;
-	border-top-right-radius: 8px;
-	border-bottom-right-radius: 8px;
 	transition: all 0.15s ease-in-out;
 
 	svg {
