@@ -52,13 +52,15 @@ const Nav = () => {
 						<p>Menu</p>
 					</NavLink>
 					{["manager"].includes(user?.role) && (
-						<NavLink
-							to="/editor"
-							style={({ isActive }) => (isActive ? activeStyle : undefined)}
-						>
-							<FiEdit />
-							<p>Menu Editor</p>
-						</NavLink>
+						<>
+							<NavLink
+								to="/editor"
+								style={({ isActive }) => (isActive ? activeStyle : undefined)}
+							>
+								<FiEdit />
+								<p>Menu Editor</p>
+							</NavLink>
+						</>
 					)}
 					{["user", "manager"].includes(user?.role) && (
 						<>

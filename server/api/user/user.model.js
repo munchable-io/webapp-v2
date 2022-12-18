@@ -30,6 +30,9 @@ const userSchema = mongoose.Schema(
 		refreshToken: {
 			type: String,
 		},
+		restaurantId: {
+			type: mongoose.Schema.Types.ObjectId,
+		},
 	},
 	{
 		timestamps: true,

@@ -10,6 +10,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import OrdersPage from "./pages/OrdersPage";
 import AccountPage from "./pages/AccountPage";
 import RestaurantLoginPage from "./pages/RestaurantLoginPage";
+import DashboardPage from "./pages/DashboardPage";
 
 const App = () => {
 	return (
@@ -27,7 +28,7 @@ const App = () => {
 					{/* manager routes */}
 					<Route element={<RequireAuth allowedRoles={["manager"]} />}>
 						<Route path="editor" element={<EditorPage />} />
-						<Route path="restaurantLogin" element={<RestaurantLoginPage />} />
+						<Route path="dashboard" element={<DashboardPage />} />
 					</Route>
 
 					{/* manager, user routes */}
@@ -35,6 +36,11 @@ const App = () => {
 						<Route path="/checkout" element={<CheckoutPage />} />
 						<Route path="/orders" element={<OrdersPage />} />
 						<Route path="/account" element={<AccountPage />} />
+					</Route>
+
+					{/* user routes */}
+					<Route element={<RequireAuth allowedRoles={["user"]} />}>
+						<Route path="restaurantLogin" element={<RestaurantLoginPage />} />
 					</Route>
 				</Route>
 

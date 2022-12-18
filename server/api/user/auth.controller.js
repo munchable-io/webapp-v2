@@ -108,6 +108,7 @@ const getAccessToken = async (req, res) => {
 					phoneNumber: user.phoneNumber,
 					email: user.email,
 					role: user.role,
+					restaurantId: user.restaurantId,
 					accessToken: accessToken,
 				});
 			}

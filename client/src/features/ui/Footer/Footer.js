@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
 	return (
 		<StyledFooter>
-			<Link to="/restaurantLogin">Restaurant Login</Link>
+			<Link to="/restaurantLogin">Create Restaurant</Link>
 		</StyledFooter>
 	);
 };

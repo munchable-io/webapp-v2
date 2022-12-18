@@ -4,6 +4,7 @@ import axios from "axios";
 // endpoint
 const USERS_URL = "http://localhost:5000/users";
 const AUTH_URL = "http://localhost:5000/users/auth";
+const UPDATE_URL = "http://localhost:5000/users";
 
 // define initial state
 const initialState = {
@@ -21,10 +22,23 @@ export const fetchUserByNumber = createAsyncThunk(
 			const response = await axios.get(`${USERS_URL}/send/${num}`);
 			return response.data;
 		} catch (err) {
+			console.error(err);
 			return false;
 		}
 	}
 );
+
+export const updateUser = createAsyncThunk("users/update", async (data) => {
+	const { id, payload } = data;
+	try {
+		const response = await axios.put(`${UPDATE_URL}/${id}`, payload);
+		console.log(response.data);
+		return response.data;
+	} catch (err) {
+		console.error(err);
+		return false;
+	}
+});
 
 export const handleLogin = createAsyncThunk("users/auth", async (payload) => {
 	const { number, otp } = payload;
@@ -110,6 +124,16 @@ const authSlice = createSlice({
 				state.status = "succeeded";
 			})
 			.addCase(handleCreateAccount.rejected, (state, action) => {
+				state.status = "failed";
+				state.error = action.error.message;
+			})
+			.addCase(updateUser.pending, (state, action) => {
+				state.status = "loading";
+			})
+			.addCase(updateUser.fulfilled, (state, action) => {
+				state.status = "succeeded";
+			})
+			.addCase(updateUser.rejected, (state, action) => {
 				state.status = "failed";
 				state.error = action.error.message;
 			});

@@ -9,6 +9,7 @@ const userValidation = (data) => {
 		password: Joi.string(),
 		role: Joi.string().required(),
 		refreshToken: Joi.string(),
+		restaurantId: Joi.string(),
 	});
 
 	return schema.validate(data);
