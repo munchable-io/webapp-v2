@@ -1,20 +1,16 @@
 import { Outlet } from "react-router-dom";
+import Header from "../ui/Header/Header";
 import Toasts from "../ui/Toast/Toasts";
-import Header from "../Header";
-import { AppSection, AppWrapper } from "./Global.styled";
-import Nav from "../Nav";
-import Footer from "../ui/Footer/Footer";
+import { AppContainer, AppWrapper } from "./Layout.styled";
 
 const Layout = () => {
 	return (
 		<AppWrapper>
-			<Nav />
-			<AppSection>
-				<Header />
+			<Header />
+			<AppContainer>
 				<Outlet />
-				<Toasts />
-				<Footer />
-			</AppSection>
+			</AppContainer>
+			<Toasts />
 		</AppWrapper>
 	);
 };

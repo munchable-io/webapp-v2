@@ -1,57 +1,32 @@
+import { forwardRef } from "react";
 import {
 	FiEdit,
-	FiFileText,
+	FiHome,
 	FiList,
 	FiLogIn,
 	FiLogOut,
 	FiUser,
 	FiX,
 } from "react-icons/fi";
-import { forwardRef, useState } from "react";
-import { NavItems, StyledNav } from "./Nav.styled";
-import NavItem from "./NavItem";
-import { useNavigate } from "react-router-dom";
-import useLogout from "../../auth/useLogout";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { isNavOpen, setIsNavOpen } from "../Header/Header.slice";
+import { NavBody, NavHeader, StyledNav } from "./Nav.styled";
 import { getUser } from "../../auth/auth.slice";
-import useRefreshToken from "../../auth/useRefreshToken";
-import { useEffect } from "react";
+import useLogout from "../../auth/useLogout";
 import { addToast } from "../Toast/Toast.slice";
-import Loading from "../Loading/Loading";
 
-const Nav = forwardRef(({ modifyModal }, ref) => {
+const Nav = forwardRef((props, ref) => {
+	const user = useSelector(getUser);
 	const dispatch = useDispatch();
-	const refresh = useRefreshToken();
-	const auth = useSelector(getUser);
 	const navigate = useNavigate();
 	const logout = useLogout();
-
-	const [isLoading, setIsLoading] = useState(true);
-
-	// load in persisting auth
-	useEffect(() => {
-		let isMounted = true;
-
-		const loadAuth = async () => {
-			try {
-				await refresh();
-			} catch (err) {
-				console.error(err);
-			} finally {
-				isMounted && setIsLoading(false);
-			}
-		};
-
-		!auth?.accessToken ? loadAuth() : setIsLoading(false);
-
-		return () => {
-			isMounted = false;
-		};
-	}, []); // eslint-disable-line
+	const navOpen = useSelector(isNavOpen);
 
 	const handleLogout = async () => {
 		try {
 			await logout();
+			dispatch(setIsNavOpen(false));
 			navigate("/");
 			dispatch(
 				addToast({
@@ -65,51 +40,72 @@ const Nav = forwardRef(({ modifyModal }, ref) => {
 		}
 	};
 
+	const activeStyle = {
+		background: "rgba(255, 255, 255, 0.1)",
+	};
+
 	return (
-		<StyledNav ref={ref}>
-			<div className="container">
-				<FiX onClick={() => modifyModal(false)} />
-				{isLoading ? (
-					<Loading size="50px" />
-				) : (
-					<NavItems>
-						<NavItem to="/" modifyModal={modifyModal}>
-							<FiFileText />
-							<p className="sm">Menu</p>
-						</NavItem>
-						{!auth?.accessToken && (
-							<NavItem to="/login" modifyModal={modifyModal}>
-								<FiLogIn />
-								<p className="sm">Register / Login</p>
-							</NavItem>
-						)}
-						{["admin", "manager"].includes(auth?.role) && (
-							<NavItem to="/editor" modifyModal={modifyModal}>
-								<FiEdit />
-								<p className="sm">Menu Editor</p>
-							</NavItem>
-						)}
-						{["manager", "user"].includes(auth?.role) && (
-							<>
-								<NavItem to="/orders" modifyModal={modifyModal}>
-									<FiList />
-									<p className="sm">Orders</p>
-								</NavItem>
-								<NavItem to="/account" modifyModal={modifyModal}>
-									<FiUser />
-									<p className="sm">My Account</p>
-								</NavItem>
-							</>
-						)}
-						{auth?.accessToken && (
-							<NavItem onClick={handleLogout} modifyModal={modifyModal}>
-								<FiLogOut />
-								<p className="sm">Logout</p>
-							</NavItem>
-						)}
-					</NavItems>
+		<StyledNav ref={ref} open={navOpen}>
+			<NavHeader>
+				<FiX onClick={() => dispatch(setIsNavOpen(false))} />
+				<h3>Welcome!</h3>
+			</NavHeader>
+			<NavBody>
+				<NavLink
+					to="/"
+					onClick={() => dispatch(setIsNavOpen(false))}
+					style={({ isActive }) => (isActive ? activeStyle : undefined)}
+				>
+					<FiHome />
+					<p>Menu</p>
+				</NavLink>
+				{["user", "manager"].includes(user?.role) && (
+					<>
+						<NavLink
+							to="/orders"
+							onClick={() => dispatch(setIsNavOpen(false))}
+							style={({ isActive }) => (isActive ? activeStyle : undefined)}
+						>
+							<FiList />
+							<p>Orders</p>
+						</NavLink>
+						<NavLink
+							to="/account"
+							onClick={() => dispatch(setIsNavOpen(false))}
+							style={({ isActive }) => (isActive ? activeStyle : undefined)}
+						>
+							<FiUser />
+							<p>Account</p>
+						</NavLink>
+					</>
 				)}
-			</div>
+				{["manager"].includes(user?.role) && (
+					<NavLink
+						to="/editor"
+						onClick={() => dispatch(setIsNavOpen(false))}
+						style={({ isActive }) => (isActive ? activeStyle : undefined)}
+					>
+						<FiEdit />
+						<p>Menu Editor</p>
+					</NavLink>
+				)}
+				{!user?.accessToken && (
+					<NavLink
+						to="/login"
+						onClick={() => dispatch(setIsNavOpen(false))}
+						style={({ isActive }) => (isActive ? activeStyle : undefined)}
+					>
+						<FiLogIn />
+						<p>Login</p>
+					</NavLink>
+				)}
+				{user?.accessToken && (
+					<NavLink onClick={() => handleLogout()}>
+						<FiLogOut />
+						<p>Logout</p>
+					</NavLink>
+				)}
+			</NavBody>
 		</StyledNav>
 	);
 });

@@ -5,6 +5,7 @@ import authReducer from "../auth/auth.slice";
 import loginReducer from "../login/login.slice";
 import toastsReducer from "../ui/Toast/Toast.slice";
 import ordersReducer from "../orders/orders.slice";
+import headerReducer from "../ui/Header/Header.slice";
 
 export const store = configureStore({
 	reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
 		login: loginReducer,
 		toasts: toastsReducer,
 		orders: ordersReducer,
+		header: headerReducer,
 	},
 });

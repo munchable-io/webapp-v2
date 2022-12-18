@@ -1,71 +1,36 @@
-import { FiMenu, FiShoppingCart } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
-import CheckoutModal from "../../checkout/CheckoutModal";
-import Nav from "../Nav/Nav";
-import useComponentVisible from "../hooks/useComponentVisible";
-import { HeaderCart, StyledHeader } from "./Header.styled";
-import { Link } from "react-router-dom";
-import { getLocalCart, updateLocalCart } from "../../users/users.slice";
 import { useEffect } from "react";
+import { FiMenu } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import useComponentVisible from "../hooks/useComponentVisible";
+import Nav from "../Nav/Nav";
+import { isNavOpen, setIsNavOpen } from "./Header.slice";
+import { StyledHeader } from "./Header.styled";
 
 const Header = () => {
 	const dispatch = useDispatch();
-	const hasOrder = useSelector(getLocalCart).length > 0;
-
-	useEffect(() => {
-		dispatch(updateLocalCart());
-	}, []); // eslint-disable-line
+	const navOpen = useSelector(isNavOpen);
 
 	const {
-		ref: navModalRef,
+		ref: navRef,
 		isComponentVisible: isNavVisible,
 		setIsComponentVisible: setIsNavVisible,
 	} = useComponentVisible(false);
 
-	const {
-		ref: checkoutRef,
-		isComponentVisible: isCheckoutVisible,
-		setIsComponentVisible: setIsCheckoutVisible,
-	} = useComponentVisible(false);
+	useEffect(() => {
+		setIsNavVisible(navOpen);
+	}, [navOpen]); // eslint-disable-line
+
+	useEffect(() => {
+		dispatch(setIsNavOpen(isNavVisible));
+	}, [isNavVisible]); // eslint-disable-line
 
 	return (
 		<StyledHeader>
-			<div className="container headerWrapper">
-				<div className="headerLeft">
-					<FiMenu onClick={() => setIsNavVisible(!isNavVisible)} />
-				</div>
-				<div className="headerCenter">
-					<h1>
-						<Link to="/">Lucky Dynasty</Link>
-					</h1>
-				</div>
-				<div className="headerRight">
-					<HeaderCart
-						hasOrder={hasOrder}
-						onClick={() => setIsCheckoutVisible(!isCheckoutVisible)}
-					>
-						<FiShoppingCart />
-					</HeaderCart>
-				</div>
-			</div>
-
-			{/* nav modal */}
-			{isNavVisible && (
-				<Nav
-					ref={navModalRef}
-					modifyModal={(state) => setIsNavVisible(state)}
-					setIsNavVisible={setIsNavVisible}
-				/>
-			)}
-
-			{/* checkout modal */}
-			{isCheckoutVisible && (
-				<CheckoutModal
-					ref={checkoutRef}
-					modifyModal={(state) => setIsCheckoutVisible(state)}
-					setIsCheckoutVisible={setIsCheckoutVisible}
-				/>
-			)}
+			<section>
+				<FiMenu onClick={() => dispatch(setIsNavOpen(true))} />
+			</section>
+			<section>cart</section>
+			<Nav ref={navRef} />
 		</StyledHeader>
 	);
 };

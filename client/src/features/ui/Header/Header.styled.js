@@ -1,72 +1,39 @@
-import styled, { keyframes } from "styled-components";
-
-const blink = keyframes`
-	0%{
-		opacity: 1;
-	}
-	55%{
-		opacity: 0;
-	}
-	100%{
-		opacity: 1;
-	}
-`;
+import styled from "styled-components";
 
 export const StyledHeader = styled.header`
-	background: white;
-	position: sticky;
-	top: 0;
+	background: var(--primary-off-white);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1rem 2rem;
+	position: relative;
 
-	div.headerWrapper {
+	section {
 		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding-bottom: 1rem;
-		border-bottom: 2px solid var(--primary-light-gray);
-
-		div {
-			display: flex;
-			align-items: center;
-		}
+		justify-items: center;
 
 		svg {
+			width: 1.5rem;
+			height: 1.5rem;
+
 			&:hover {
 				cursor: pointer;
 			}
 		}
+	}
 
-		h1 {
-			color: var(--restaurant-primary);
-			text-align: center;
+	@media (max-width: 768px) {
+		padding: 0.5rem 1rem;
 
-			a {
-				color: inherit;
-				text-decoration: none;
+		section {
+			svg {
+				width: 2rem;
+				height: 2rem;
 			}
 		}
 	}
-`;
 
-export const HeaderCart = styled.span`
-	width: 1.6rem;
-	height: 1.6rem;
-	position: relative;
-
-	svg {
-		width: 100%;
-		height: 100%;
-	}
-
-	&::after {
-		display: ${(props) => (props.hasOrder ? "block" : "none")};
-		content: "";
-		position: absolute;
-		width: 10px;
-		height: 10px;
-		border-radius: 10px;
-		top: -5px;
-		right: -5px;
-		background: var(--primary-bright-red);
-		animation: ${blink} 1.5s linear infinite;
+	@media (max-width: 400px) {
+		padding: 0.25rem 0.5rem;
 	}
 `;

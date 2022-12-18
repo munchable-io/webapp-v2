@@ -3,15 +3,17 @@ import styled from "styled-components";
 export const StyledNav = styled.nav`
 	position: fixed;
 	top: 0;
-	left: 0;
+	left: ${(props) => (props.open ? "0px" : "-350px")};
 	width: 350px;
 	height: 100%;
-	background: white;
+	background: black;
+	color: white;
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+	transition: all 0.25s ease-in-out;
 
 	svg {
-		&:hover {
-			cursor: pointer;
-		}
+		color: white;
 	}
 
 	@media (max-width: 350px) {
@@ -19,37 +21,72 @@ export const StyledNav = styled.nav`
 	}
 `;
 
-export const NavItems = styled.div`
-	padding: 2rem 0;
+export const NavHeader = styled.header`
+	padding: 1rem 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	column-gap: 0.5rem;
+
+	svg {
+		width: 1.5rem;
+		height: 1.5rem;
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+
+	@media (max-width: 768px) {
+		padding: 0.5rem 1rem;
+
+		svg {
+			width: 2rem;
+			height: 2rem;
+		}
+	}
+
+	@media (max-width: 400px) {
+		padding: 0.25rem 0.5rem;
+	}
+`;
+
+export const NavBody = styled.main`
+	padding: 1rem 2rem;
 	display: flex;
 	flex-direction: column;
-	row-gap: 0.25rem;
+	row-gap: 0.5rem;
 
 	a {
-		list-style: none;
+		color: white;
 		display: flex;
 		align-items: center;
-		column-gap: 0.5rem;
-		color: var(--primary-dark-gray);
+		column-gap: 1rem;
 		padding: 0.5rem;
-		border-radius: 8px;
+		border-radius: 5px;
 		transition: all 0.25s;
 
 		svg {
-			width: 1.2rem;
-			height: 1.2rem;
-			color: var(--primary-dark-gray);
-			transition: all 0.25s;
+			width: 1.3rem;
+			height: 1.3rem;
 		}
 
 		&:hover {
 			text-decoration: none;
-			color: var(--primary-blue);
-			background: rgba(9, 132, 227, 0.1);
-
-			svg {
-				color: var(--primary-blue);
-			}
+			background: rgba(255, 255, 255, 0.1);
 		}
+	}
+
+	@media (max-width: 768px) {
+		padding: 0.5rem 1rem;
+
+		svg {
+			width: 2rem;
+			height: 2rem;
+		}
+	}
+
+	@media (max-width: 400px) {
+		padding: 0.25rem 0.5rem;
 	}
 `;
