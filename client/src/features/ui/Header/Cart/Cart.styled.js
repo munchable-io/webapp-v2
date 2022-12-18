@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledCart = styled.div`
-	background: var(--primary-dark-gray);
+	background: #c23616;
 	color: white;
 	display: flex;
 	align-items: center;

@@ -10,9 +10,7 @@ const MenuPage = () => {
 	return (
 		<MenuWrapper>
 			{/* page content  */}
-			<div className="container flex-column">
-				<ItemsList modifyModal={(state) => setIsComponentVisible(state)} />
-			</div>
+			<ItemsList modifyModal={(state) => setIsComponentVisible(state)} />
 
 			{/* item modal  */}
 			{isComponentVisible && (

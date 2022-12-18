@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledHeader = styled.header`
-	background: var(--primary-off-white);
+	background: var(--primary-dark-gray);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -13,6 +13,7 @@ export const StyledHeader = styled.header`
 		justify-items: center;
 
 		svg {
+			color: white;
 			width: 1.5rem;
 			height: 1.5rem;
 
