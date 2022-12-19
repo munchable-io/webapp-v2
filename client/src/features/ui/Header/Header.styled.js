@@ -65,7 +65,6 @@ export const HeaderContent = styled.div`
 	background-position: middle;
 	background-attachment: fixed;
 	background-repeat: no-repeat;
-	border-radius: 8px;
 	padding: 1rem 2rem;
 	color: white;
 	display: ${(props) => (props.shrink ? "none" : "flex")};
