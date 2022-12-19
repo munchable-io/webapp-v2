@@ -27,65 +27,68 @@ const Header = () => {
 
 	const [infoModalOpen, setInfoModalOpen] = useState(false);
 
+	// create ref for nav modal
 	const {
 		ref: navRef,
 		isComponentVisible: isNavVisible,
 		setIsComponentVisible: setIsNavVisible,
 	} = useComponentVisible(false);
 
+	// create ref for checkout modal
 	const {
 		ref: checkoutRef,
 		isComponentVisible: isCheckoutVisible,
 		setIsComponentVisible: setIsCheckoutVisible,
 	} = useComponentVisible(false);
 
+	// update nav modal on click outside element
 	useEffect(() => {
 		setIsNavVisible(navOpen);
 	}, [navOpen]); // eslint-disable-line
-
 	useEffect(() => {
 		dispatch(setIsNavOpen(isNavVisible));
 	}, [isNavVisible]); // eslint-disable-line
 
+	// update checkout modal on click outside element
 	useEffect(() => {
 		setIsCheckoutVisible(checkoutOpen);
 	}, [checkoutOpen]); // eslint-disable-line
-
 	useEffect(() => {
 		dispatch(setIsCheckoutOpen(isCheckoutVisible));
 	}, [isCheckoutVisible]); // eslint-disable-line
 
 	return (
-		<StyledHeader className="flex-column">
-			<div className="headerRow">
-				<HeaderSection>
-					<FiMenu onClick={() => dispatch(setIsNavOpen(true))} />
-				</HeaderSection>
-				<HeaderSection hidden={true}>
-					<h2>
-						<Link to="">Lucky Dynasty</Link>
-					</h2>
-				</HeaderSection>
-				<HeaderSection>
-					<Cart onClick={() => dispatch(setIsCheckoutOpen(true))} />
-				</HeaderSection>
-			</div>
+		<>
+			<StyledHeader>
+				<div className="headerRow">
+					<HeaderSection>
+						<FiMenu onClick={() => dispatch(setIsNavOpen(true))} />
+					</HeaderSection>
+					<HeaderSection>
+						<h2>
+							<Link to="">Lucky Dynasty</Link>
+						</h2>
+					</HeaderSection>
+					<HeaderSection>
+						<Cart onClick={() => dispatch(setIsCheckoutOpen(true))} />
+					</HeaderSection>
+				</div>
+				<Nav ref={navRef} />
+				<Checkout ref={checkoutRef} />
+			</StyledHeader>
 			<HeaderContent>
 				<div className="contentFlex">
-					<h1>Lucky Dynasty</h1>
-					<p>(1110 Emanuel Cleaver II Blvd. Kansas City, MO)</p>
+					<h3>1110 Emanuel Cleaver II Blvd. Kansas City, MO</h3>
 				</div>
 				<div className="contentRow">
 					<p>Open today until 10pm</p>
 					<FiInfo onClick={() => setInfoModalOpen(!infoModalOpen)} />
 				</div>
 				<div className="contentRow">
-					<HeaderTag>Chinese fast food</HeaderTag>
+					<HeaderTag>Delicious Chinese food, made fresh every day!</HeaderTag>
 				</div>
 			</HeaderContent>
-			<Nav ref={navRef} />
-			<Checkout ref={checkoutRef} />
-		</StyledHeader>
+		</>
 	);
 };
 

@@ -7,6 +7,9 @@ export const StyledHeader = styled.header`
 	background-position: middle;
 	background-attachment: fixed;
 	background-repeat: no-repeat;
+	position: sticky;
+	top: 0;
+	transition: all 0.25s ease-in-out;
 
 	div.headerRow {
 		display: flex;
@@ -34,7 +37,8 @@ export const StyledHeader = styled.header`
 `;
 
 export const HeaderSection = styled.section`
-	display: ${(props) => (props.hidden ? "none" : "flex")};
+	color: white;
+	display: ${(props) => (props.notShrink ? "none" : "flex")};
 	justify-items: center;
 	transition: all 0.25s;
 
@@ -55,9 +59,15 @@ export const HeaderSection = styled.section`
 `;
 
 export const HeaderContent = styled.div`
+	background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)),
+		url("https://www.gannett-cdn.com/presto/2021/08/10/NPPP/049f8a18-4cee-4b83-b4db-eae7108a6edf-Pagoda_Kitchen_rendering_.jpg");
+	background-size: cover;
+	background-position: middle;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
 	padding: 1rem 2rem;
 	color: white;
-	display: flex;
+	display: ${(props) => (props.shrink ? "none" : "flex")};
 	flex-direction: column;
 	row-gap: 1rem;
 

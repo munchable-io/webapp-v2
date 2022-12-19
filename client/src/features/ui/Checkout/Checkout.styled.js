@@ -29,6 +29,12 @@ export const CheckoutHeader = styled.header`
 	align-items: center;
 	justify-content: space-between;
 
+	svg {
+		&:hover {
+			cursor: pointer;
+		}
+	}
+
 	@media (max-width: 768px) {
 		padding: 0.5rem 1rem;
 
