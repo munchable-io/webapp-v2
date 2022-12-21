@@ -21,7 +21,6 @@ const ItemCard = ({ item, modifyModal }) => {
                     <h3>{item?.name}</h3>
                     <ItemCardPills>
                         <li>Vegan</li>
-                        <li>Gluten-Free</li>
                         <li>Organic</li>
                     </ItemCardPills>
                 </section>
