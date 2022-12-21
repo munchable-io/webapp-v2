@@ -14,6 +14,13 @@ export const MenuWrapper = styled.div`
 export const MenuContainer = styled.section`
     max-width: 1400px;
     padding: 1rem 0;
+
+    @media (max-width: 1400px) {
+        padding: 1rem;
+    }
+    @media (max-width: 450px) {
+        padding: 0.5rem;
+    }
 `;
 
 export const MenuInfo = styled.ul`

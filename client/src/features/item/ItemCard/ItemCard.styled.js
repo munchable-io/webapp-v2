@@ -11,8 +11,9 @@ export const StyledItemCard = styled.section`
 
     img {
         width: 100%;
-        height: 200px;
+        height: 20vh;
         object-fit: cover;
+        border-radius: 4px;
     }
 
     div.cardBody {
