@@ -26,9 +26,9 @@ app.use("/restaurants", require("./api/restaurant"));
 
 // connect to server
 app.listen(PORT, (err) => {
-	if (!err) {
-		console.log(`Server running on port ${PORT}`);
-	} else {
-		console.log("Error occured: ", err);
-	}
+    if (!err) {
+        console.log(`Server running on port ${PORT}`);
+    } else {
+        console.log("Error occured: ", err);
+    }
 });
