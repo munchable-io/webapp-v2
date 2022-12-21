@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const StyledItemCard = styled.section`
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
     z-index: 1;
     padding: 1rem;
     color: white;
@@ -75,5 +75,6 @@ export const ItemCardPills = styled.ul`
         background: var(--bg-primary);
         padding: 2px 0.5rem;
         border-radius: 50px;
+        width: max-width;
     }
 `;

@@ -6,7 +6,6 @@ export const MenuWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     background-image: url("https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
-    backdrop-filter: blur(5px);
     background-attachment: fixed;
     background-size: cover;
     background-repeat: no-repeat;

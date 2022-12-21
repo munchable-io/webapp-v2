@@ -12,11 +12,6 @@ const ItemCard = ({ item, modifyModal }) => {
 
     return (
         <StyledItemCard onClick={handleClick}>
-            {/* <h4>{item?.name}</h4>
-			<p className="xs">{item?.description.substring(0, 50)}...</p>
-			<div className="itemCardRow">
-				<p className="xs">${item?.price}</p>
-			</div> */}
             <img
                 src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
                 alt=""
